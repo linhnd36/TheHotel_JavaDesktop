@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package linhns.dtos;
+package linhnd.dtos;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -208,7 +208,7 @@ public class Users implements Serializable {
 
     @Override
     public String toString() {
-        return "linhns.dtos.Users[ username=" + username + " ]";
+        return "linhnd.dtos.Users[ username=" + username + " ]";
     }
     
 }

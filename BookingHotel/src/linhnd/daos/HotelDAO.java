@@ -6,15 +6,16 @@
 package linhnd.daos;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import javax.persistence.TemporalType;
-import linhns.dtos.Hotel;
+import linhnd.dtos.Booking;
+import linhnd.dtos.Hotel;
 
 /**
  *
@@ -28,24 +29,29 @@ public class HotelDAO implements Serializable {
     public HotelDAO() {
     }
 
-    public List<Hotel> findHotel() throws Exception {
+    public List<Hotel> loadAllHotel() throws Exception {
         List<Hotel> result = null;
         try {
-            //Query query = em.createQuery("SELECT DISTINCT h FROM Hotel h,RoomInHotel r WHERE r.dateRoomFrom = ?1 AND r.dateRoomTo <= '2020-04-02' OR r.statusRoom = 'ready' and h.statusHotel='active' ",Hotel.class);
-            Query query = em.createQuery("SELECT DISTINCT h FROM Hotel h,RoomInHotel r WHERE h.hotelID = r.hotel.hotelID and r.statusRoom = ?1 and r.dateRoomFrom >= ?2 ");
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            
-            Date date = simpleDateFormat.parse("2020-04-01");
-            query.setParameter(1, "checking");
-            query.setParameter(2, date, TemporalType.DATE);
-
-            result = query.getResultList();
-            for (Hotel hotel : result) {
-                System.out.println(hotel.getNameHotel());
-            }
-        } catch (Exception e) {
+            result = em.createQuery("SELECT h FROM Hotel h WHERE h.statusHotel = 'active' ORDER BY h.rateHotel DESC ").getResultList();
+        } finally {
             em.close();
         }
         return result;
     }
+    
+    public Map<String,String> getIdHotelByIdBooking(List<Booking> listBooking) throws Exception{
+        Map<String,String> result = new HashMap<>();
+        try {
+            Query query = em.createQuery("SELECT  h.hotelID FROM Hotel h,DetailBooking db,Booking b WHERE b.idBooking = db.booking.idBooking AND db.hotel.hotelID = h.hotelID AND b.idBooking = ?1 ");
+            for (Booking booking : listBooking) {
+                query.setParameter(1, booking.getIdBooking());
+                String idHotel = query.getSingleResult().toString();
+                result.put(booking.getIdBooking(), idHotel);
+            }
+        }finally{
+            em.close();
+        }
+        return result;
+    }
+
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package linhns.dtos;
+package linhnd.dtos;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -114,7 +114,7 @@ public class UserHaveDiscount implements Serializable {
 
     @Override
     public String toString() {
-        return "linhns.dtos.UserHaveDiscount[ userHaveDiscountPK=" + userHaveDiscountPK + " ]";
+        return "linhnd.dtos.UserHaveDiscount[ userHaveDiscountPK=" + userHaveDiscountPK + " ]";
     }
     
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package linhns.dtos;
+package linhnd.dtos;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "DetailBooking.findAll", query = "SELECT d FROM DetailBooking d")
     , @NamedQuery(name = "DetailBooking.findByCodeRoom", query = "SELECT d FROM DetailBooking d WHERE d.codeRoom = :codeRoom")
-    , @NamedQuery(name = "DetailBooking.findByNumberOfRoom", query = "SELECT d FROM DetailBooking d WHERE d.numberOfRoom = :numberOfRoom")
+    , @NamedQuery(name = "DetailBooking.findByNumberOfNice", query = "SELECT d FROM DetailBooking d WHERE d.numberOfNice = :numberOfNice")
     , @NamedQuery(name = "DetailBooking.findByPriceDetail", query = "SELECT d FROM DetailBooking d WHERE d.priceDetail = :priceDetail")
     , @NamedQuery(name = "DetailBooking.findByHotelID", query = "SELECT d FROM DetailBooking d WHERE d.detailBookingPK.hotelID = :hotelID")
     , @NamedQuery(name = "DetailBooking.findByIdBooking", query = "SELECT d FROM DetailBooking d WHERE d.detailBookingPK.idBooking = :idBooking")})
@@ -40,8 +40,8 @@ public class DetailBooking implements Serializable {
     @Column(name = "codeRoom")
     private String codeRoom;
     @Basic(optional = false)
-    @Column(name = "numberOfRoom")
-    private int numberOfRoom;
+    @Column(name = "numberOfNice")
+    private int numberOfNice;
     @Basic(optional = false)
     @Column(name = "priceDetail")
     private String priceDetail;
@@ -59,10 +59,10 @@ public class DetailBooking implements Serializable {
         this.detailBookingPK = detailBookingPK;
     }
 
-    public DetailBooking(DetailBookingPK detailBookingPK, String codeRoom, int numberOfRoom, String priceDetail) {
+    public DetailBooking(DetailBookingPK detailBookingPK, String codeRoom, int numberOfNice, String priceDetail) {
         this.detailBookingPK = detailBookingPK;
         this.codeRoom = codeRoom;
-        this.numberOfRoom = numberOfRoom;
+        this.numberOfNice = numberOfNice;
         this.priceDetail = priceDetail;
     }
 
@@ -86,12 +86,12 @@ public class DetailBooking implements Serializable {
         this.codeRoom = codeRoom;
     }
 
-    public int getNumberOfRoom() {
-        return numberOfRoom;
+    public int getNumberOfNice() {
+        return numberOfNice;
     }
 
-    public void setNumberOfRoom(int numberOfRoom) {
-        this.numberOfRoom = numberOfRoom;
+    public void setNumberOfNice(int numberOfNice) {
+        this.numberOfNice = numberOfNice;
     }
 
     public String getPriceDetail() {
@@ -140,7 +140,7 @@ public class DetailBooking implements Serializable {
 
     @Override
     public String toString() {
-        return "linhns.dtos.DetailBooking[ detailBookingPK=" + detailBookingPK + " ]";
+        return "linhnd.dtos.DetailBooking[ detailBookingPK=" + detailBookingPK + " ]";
     }
     
 }

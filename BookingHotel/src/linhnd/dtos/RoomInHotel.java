@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package linhns.dtos;
+package linhnd.dtos;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -16,8 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -30,8 +27,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "RoomInHotel.findAll", query = "SELECT r FROM RoomInHotel r")
     , @NamedQuery(name = "RoomInHotel.findByCodeRoom", query = "SELECT r FROM RoomInHotel r WHERE r.roomInHotelPK.codeRoom = :codeRoom")
-    , @NamedQuery(name = "RoomInHotel.findByDateRoomFrom", query = "SELECT r FROM RoomInHotel r WHERE r.dateRoomFrom = :dateRoomFrom")
-    , @NamedQuery(name = "RoomInHotel.findByDateRoomTo", query = "SELECT r FROM RoomInHotel r WHERE r.dateRoomTo = :dateRoomTo")
     , @NamedQuery(name = "RoomInHotel.findByStatusRoom", query = "SELECT r FROM RoomInHotel r WHERE r.statusRoom = :statusRoom")
     , @NamedQuery(name = "RoomInHotel.findByHotelID", query = "SELECT r FROM RoomInHotel r WHERE r.roomInHotelPK.hotelID = :hotelID")
     , @NamedQuery(name = "RoomInHotel.findByIdKindRoom", query = "SELECT r FROM RoomInHotel r WHERE r.roomInHotelPK.idKindRoom = :idKindRoom")})
@@ -40,12 +35,6 @@ public class RoomInHotel implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected RoomInHotelPK roomInHotelPK;
-    @Column(name = "dateRoomFrom")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateRoomFrom;
-    @Column(name = "dateRoomTo")
-    @Temporal(TemporalType.DATE)
-    private Date dateRoomTo;
     @Basic(optional = false)
     @Column(name = "statusRoom")
     private String statusRoom;
@@ -78,22 +67,6 @@ public class RoomInHotel implements Serializable {
 
     public void setRoomInHotelPK(RoomInHotelPK roomInHotelPK) {
         this.roomInHotelPK = roomInHotelPK;
-    }
-
-    public Date getDateRoomFrom() {
-        return dateRoomFrom;
-    }
-
-    public void setDateRoomFrom(Date dateRoomFrom) {
-        this.dateRoomFrom = dateRoomFrom;
-    }
-
-    public Date getDateRoomTo() {
-        return dateRoomTo;
-    }
-
-    public void setDateRoomTo(Date dateRoomTo) {
-        this.dateRoomTo = dateRoomTo;
     }
 
     public String getStatusRoom() {
@@ -142,7 +115,7 @@ public class RoomInHotel implements Serializable {
 
     @Override
     public String toString() {
-        return "linhns.dtos.RoomInHotel[ roomInHotelPK=" + roomInHotelPK + " ]";
+        return "linhnd.dtos.RoomInHotel[ roomInHotelPK=" + roomInHotelPK + " ]";
     }
     
 }

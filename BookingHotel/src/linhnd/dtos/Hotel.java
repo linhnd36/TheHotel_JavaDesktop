@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package linhns.dtos;
+package linhnd.dtos;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -75,11 +75,12 @@ public class Hotel implements Serializable {
         this.rateHotel = rateHotel;
         this.statusHotel = statusHotel;
     }
-    public void toVectorViewHotel(){
+    public Vector toVecterHotel(){
         Vector v = new Vector();
         v.add(nameHotel);
         v.add(addressHotel);
         v.add(rateHotel);
+        return  v;
     }
 
     public String getHotelID() {
@@ -170,7 +171,7 @@ public class Hotel implements Serializable {
 
     @Override
     public String toString() {
-        return "linhns.dtos.Hotel[ hotelID=" + hotelID + " ]";
+        return "linhnd.dtos.Hotel[ hotelID=" + hotelID + " ]";
     }
     
 }
