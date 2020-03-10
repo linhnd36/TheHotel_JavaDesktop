@@ -37,6 +37,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Hotel.findByDesHotel", query = "SELECT h FROM Hotel h WHERE h.desHotel = :desHotel")})
 public class Hotel implements Serializable {
 
+    @Column(name = "imagerName")
+    private String imagerName;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -77,6 +80,7 @@ public class Hotel implements Serializable {
     }
     public Vector toVecterHotel(){
         Vector v = new Vector();
+        v.add(hotelID);
         v.add(nameHotel);
         v.add(addressHotel);
         v.add(rateHotel);
@@ -172,6 +176,14 @@ public class Hotel implements Serializable {
     @Override
     public String toString() {
         return "linhnd.dtos.Hotel[ hotelID=" + hotelID + " ]";
+    }
+
+    public String getImagerName() {
+        return imagerName;
+    }
+
+    public void setImagerName(String imagerName) {
+        this.imagerName = imagerName;
     }
     
 }
