@@ -5,6 +5,8 @@
  */
 package linhns.view;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -23,12 +25,14 @@ public class WelcomeJFrame extends javax.swing.JFrame {
 
     DefaultTableModel tableModelHotel = null;
     DefaultTableModel tableModelRoomInHotel = null;
+    Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 
     /**
      * Creates new form WelcomeJFrame
      */
     public WelcomeJFrame() {
         initComponents();
+        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
         tableModelHotel = (DefaultTableModel) tableViewHotel.getModel();
         tableModelRoomInHotel = (DefaultTableModel) TableViewTypeRoomInHotel.getModel();
         firstController();
@@ -51,8 +55,9 @@ public class WelcomeJFrame extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    private void viewDetailRoomInHotel(List<KindOfRoom> result){
-         tableModelRoomInHotel.setRowCount(0);
+
+    private void viewDetailRoomInHotel(List<KindOfRoom> result) {
+        tableModelRoomInHotel.setRowCount(0);
         for (KindOfRoom kindOfRoom : result) {
             tableModelRoomInHotel.addRow(kindOfRoom.toVectorTypeRoom());
         }
@@ -80,10 +85,6 @@ public class WelcomeJFrame extends javax.swing.JFrame {
         txtIdHotel = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         txtRate = new javax.swing.JLabel();
-        dateFromDetail = new com.toedter.calendar.JDateChooser();
-        dateToDetail = new com.toedter.calendar.JDateChooser();
-        jButton4 = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
         txtSearchAdressHotel = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -96,6 +97,7 @@ public class WelcomeJFrame extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel5.setText("Detail Hotel");
@@ -142,10 +144,6 @@ public class WelcomeJFrame extends javax.swing.JFrame {
         txtRate.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtRate.setText("jLabel10");
 
-        jButton4.setText("Check Room");
-
-        jLabel10.setText("TO");
-
         javax.swing.GroupLayout DetailHotelJFrameLayout = new javax.swing.GroupLayout(DetailHotelJFrame.getContentPane());
         DetailHotelJFrame.getContentPane().setLayout(DetailHotelJFrameLayout);
         DetailHotelJFrameLayout.setHorizontalGroup(
@@ -156,75 +154,52 @@ public class WelcomeJFrame extends javax.swing.JFrame {
                         .addGap(37, 37, 37)
                         .addComponent(jLabel5))
                     .addGroup(DetailHotelJFrameLayout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(labelImager, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9))
+                        .addGap(85, 85, 85)
                         .addGroup(DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(DetailHotelJFrameLayout.createSequentialGroup()
-                                .addGap(36, 36, 36)
-                                .addComponent(labelImager, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DetailHotelJFrameLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(dateFromDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)))
-                        .addGroup(DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(DetailHotelJFrameLayout.createSequentialGroup()
-                                .addGroup(DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel9))
-                                .addGap(85, 85, 85)
-                                .addGroup(DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNameHotel)
-                                    .addComponent(txtAddressHotel)
-                                    .addComponent(txtIdHotel)
-                                    .addComponent(txtRate)))
-                            .addGroup(DetailHotelJFrameLayout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addGap(18, 18, 18)
-                                .addComponent(dateToDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(37, 37, 37)
-                                .addComponent(jButton4))))
-                    .addGroup(DetailHotelJFrameLayout.createSequentialGroup()
-                        .addGap(135, 135, 135)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 649, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(149, Short.MAX_VALUE))
+                            .addComponent(txtNameHotel)
+                            .addComponent(txtAddressHotel)
+                            .addComponent(txtIdHotel)
+                            .addComponent(txtRate))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DetailHotelJFrameLayout.createSequentialGroup()
+                .addGap(0, 154, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 649, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(130, 130, 130))
         );
         DetailHotelJFrameLayout.setVerticalGroup(
             DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DetailHotelJFrameLayout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addComponent(jLabel5)
+                .addGap(30, 30, 30)
                 .addGroup(DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(DetailHotelJFrameLayout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(DetailHotelJFrameLayout.createSequentialGroup()
-                                .addGroup(DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel7)
-                                    .addComponent(txtIdHotel))
-                                .addGap(18, 18, 18)
-                                .addGroup(DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel6)
-                                    .addComponent(txtNameHotel))
-                                .addGap(22, 22, 22)
-                                .addGroup(DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel8)
-                                    .addComponent(txtAddressHotel))
-                                .addGap(18, 18, 18)
-                                .addGroup(DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel9)
-                                    .addComponent(txtRate)))
-                            .addComponent(labelImager, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
-                        .addGroup(DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(dateToDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(dateFromDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10)))
-                    .addGroup(DetailHotelJFrameLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton4)))
-                .addGap(50, 50, 50)
+                        .addGroup(DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(txtIdHotel))
+                        .addGap(18, 18, 18)
+                        .addGroup(DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(txtNameHotel))
+                        .addGap(22, 22, 22)
+                        .addGroup(DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(txtAddressHotel))
+                        .addGap(18, 18, 18)
+                        .addGroup(DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(txtRate)))
+                    .addComponent(labelImager, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -260,9 +235,9 @@ public class WelcomeJFrame extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tableViewHotel);
 
-        dateSearchFrom.setDateFormatString("yyyy-MM-dd");
+        dateSearchFrom.setDateFormatString("dd-MM-yyyy");
 
-        dateSearchTo.setDateFormatString("yyyy-MM-dd");
+        dateSearchTo.setDateFormatString("dd-MM-yyyy");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("BOOKING HOTEL");
@@ -289,10 +264,24 @@ public class WelcomeJFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel11.setForeground(new java.awt.Color(255, 51, 51));
+        jLabel11.setText("* You need login to Booking Hotel");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(198, 198, 198)
+                        .addComponent(jButton2)
+                        .addGap(25, 25, 25))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 625, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(104, 104, 104))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -314,19 +303,11 @@ public class WelcomeJFrame extends javax.swing.JFrame {
                                 .addComponent(jButton3))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(130, 130, 130)
-                        .addComponent(jLabel2)))
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(86, 86, 86)
+                        .addComponent(jLabel11)))
                 .addContainerGap(57, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(198, 198, 198)
-                        .addComponent(jButton2)
-                        .addGap(25, 25, 25))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 625, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(104, 104, 104))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -350,7 +331,9 @@ public class WelcomeJFrame extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(43, 43, 43)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(90, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addComponent(jLabel11)
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         pack();
@@ -360,17 +343,22 @@ public class WelcomeJFrame extends javax.swing.JFrame {
         String stringSearchValue = txtSearchAdressHotel.getText();
         Date dateFrom = dateSearchFrom.getDate();
         Date dateTo = dateSearchTo.getDate();
+        Date datenow = new Date();
         SearchController search = new SearchController();
         List<Hotel> listSearchHotel;
         if (dateFrom != null && dateTo != null) {
-            if (dateFrom.compareTo(dateTo) < 0) {
-                JOptionPane.showMessageDialog(this, "Pls, Choose  dateFrom > dateTo");
+            if (dateFrom.compareTo(datenow) < 0 && dateTo.compareTo(datenow) < 0 && dateFrom.compareTo(dateTo) == 0) {
+                JOptionPane.showMessageDialog(this, "input date > date now");
             } else {
-                try {
-                    listSearchHotel = search.getListHotelVaild(stringSearchValue, dateFrom, dateTo);
-                    viewTableAllHotel(listSearchHotel);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
+                if (dateFrom.compareTo(dateTo) > 0) {
+                    JOptionPane.showMessageDialog(this, "Pls, Choose  dateFrom > dateTo");
+                } else {
+                    try {
+                        listSearchHotel = search.getListHotelVaild(stringSearchValue, dateFrom, dateTo);
+                        viewTableAllHotel(listSearchHotel);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                 }
             }
         }
@@ -385,6 +373,8 @@ public class WelcomeJFrame extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         firstController();
+        txtSearchAdressHotel.setText("");
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -454,16 +444,13 @@ public class WelcomeJFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFrame DetailHotelJFrame;
     private javax.swing.JTable TableViewTypeRoomInHotel;
-    private com.toedter.calendar.JDateChooser dateFromDetail;
     private com.toedter.calendar.JDateChooser dateSearchFrom;
     private com.toedter.calendar.JDateChooser dateSearchTo;
-    private com.toedter.calendar.JDateChooser dateToDetail;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

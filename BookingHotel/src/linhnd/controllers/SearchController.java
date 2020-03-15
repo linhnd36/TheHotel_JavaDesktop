@@ -13,9 +13,11 @@ import java.util.Map;
 import linhnd.daos.BookingDAO;
 import linhnd.daos.DetailBookingDAO;
 import linhnd.daos.HotelDAO;
+import linhnd.daos.KindOfRoomDAO;
 import linhnd.daos.RoomInHotelDAO;
 import linhnd.dtos.Booking;
 import linhnd.dtos.Hotel;
+import linhnd.dtos.KindOfRoom;
 
 /**
  *
@@ -75,5 +77,31 @@ public class SearchController implements Serializable {
             e.printStackTrace();
         }
         return listHotelValid;
+    }
+
+    public List<KindOfRoom> checkKindOfRoom(Date dateFrom, Date dateTo, String idHotel) throws Exception {
+        List<Booking> resultBooking = null;
+        List<KindOfRoom> listKindOfRoomlValid = new ArrayList<>();
+        List<KindOfRoom> listKindOfRoomlInHotel = null;
+        try {
+            BookingDAO bookingDAO = new BookingDAO();
+            RoomInHotelDAO roomInHotelDAO = new RoomInHotelDAO();
+            KindOfRoomDAO kindOfRoomDAO = new KindOfRoomDAO();
+            resultBooking = bookingDAO.getListBookingInHotel(dateFrom, dateTo, idHotel);
+            listKindOfRoomlInHotel = kindOfRoomDAO.getListKindOfRoom(idHotel);
+            for (KindOfRoom kindOfRoom : listKindOfRoomlInHotel) {
+                int countKindOfRoomBooking = 0;
+                int countKindOfRoom = roomInHotelDAO.countOfRoomInHotel(kindOfRoom.getIdKindRoom());
+                for (Booking booking : resultBooking) {
+                    countKindOfRoomBooking = countKindOfRoomBooking + roomInHotelDAO.countKindOfRoomBooking(kindOfRoom.getIdKindRoom(), idHotel, booking.getIdBooking());
+                }
+                if (countKindOfRoom > countKindOfRoomBooking) {
+                    listKindOfRoomlValid.add(kindOfRoom);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listKindOfRoomlValid;
     }
 }

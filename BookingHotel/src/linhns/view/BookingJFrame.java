@@ -5,13 +5,23 @@
  */
 package linhns.view;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import linhnd.controllers.SearchController;
+import linhnd.daos.CartBookingDTO;
+import linhnd.daos.DiscountDAO;
 import linhnd.daos.HotelDAO;
+import linhnd.daos.KindOfRoomDAO;
+import linhnd.dtos.Discount;
 import linhnd.dtos.Hotel;
+import linhnd.dtos.KindOfRoom;
+import linhnd.dtos.UserDTO;
 
 /**
  *
@@ -20,13 +30,21 @@ import linhnd.dtos.Hotel;
 public class BookingJFrame extends javax.swing.JFrame {
 
     DefaultTableModel tableModelHotel = null;
+    DefaultTableModel tableModelRoomInHotel = null;
+    DefaultTableModel tableModelCart = null;
+    private List<CartBookingDTO> listCart = new ArrayList<>();
+    private boolean checkSearch = false;
+    Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 
     /**
      * Creates new form WelcomeJFrame
      */
     public BookingJFrame() {
         initComponents();
+        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
         tableModelHotel = (DefaultTableModel) tableViewHotel.getModel();
+        tableModelRoomInHotel = (DefaultTableModel) TableViewTypeRoomInHotel.getModel();
+        tableModelCart = (DefaultTableModel) tableViewCart.getModel();
         firstController();
 
     }
@@ -48,6 +66,20 @@ public class BookingJFrame extends javax.swing.JFrame {
         }
     }
 
+    private void viewDetailRoomInHotel(List<KindOfRoom> result) {
+        tableModelRoomInHotel.setRowCount(0);
+        for (KindOfRoom kindOfRoom : result) {
+            tableModelRoomInHotel.addRow(kindOfRoom.toVectorTypeRoom());
+        }
+    }
+
+    private void viewCart(List<CartBookingDTO> result) {
+        tableModelCart.setRowCount(0);
+        for (CartBookingDTO cartBookingDTO : result) {
+            tableModelCart.addRow(cartBookingDTO.toVector());
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -57,6 +89,59 @@ public class BookingJFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        DetailHotelJFrame = new javax.swing.JFrame();
+        jLabel5 = new javax.swing.JLabel();
+        labelImager = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        TableViewTypeRoomInHotel = new javax.swing.JTable();
+        jLabel6 = new javax.swing.JLabel();
+        txtNameHotel = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        txtAddressHotel = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        txtIdHotel = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        txtRate = new javax.swing.JLabel();
+        dataDetailFrom = new com.toedter.calendar.JDateChooser();
+        dataDetailTo = new com.toedter.calendar.JDateChooser();
+        jButton5 = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
+        BookingRoom = new javax.swing.JFrame();
+        jLabel10 = new javax.swing.JLabel();
+        txtDateFrom = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        Combobox = new javax.swing.JComboBox<>();
+        jButton4 = new javax.swing.JButton();
+        txtDateTo = new javax.swing.JLabel();
+        txtPrice = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        txtTotal = new javax.swing.JLabel();
+        txtIdTypeRoom = new javax.swing.JLabel();
+        txtNametypeRoom = new javax.swing.JLabel();
+        numberOfdate = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        CartJFrame = new javax.swing.JFrame();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tableViewCart = new javax.swing.JTable();
+        jLabel18 = new javax.swing.JLabel();
+        txtUserName = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        txtTotalInCart = new javax.swing.JLabel();
+        jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        txtDiscountCode = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        txtDiscount = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        txtThanhTien = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        txtDisDiscount = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
         txtSearchAdressHotel = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -67,6 +152,430 @@ public class BookingJFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel5.setText("Detail Hotel");
+
+        TableViewTypeRoomInHotel.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID Room", "Type Room", "Number of People", "Price"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        TableViewTypeRoomInHotel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TableViewTypeRoomInHotelMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(TableViewTypeRoomInHotel);
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setText("Name Hotel :");
+
+        txtNameHotel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtNameHotel.setText("jLabel7");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel8.setText("Address Hotel :");
+
+        txtAddressHotel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtAddressHotel.setText("jLabel9");
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel7.setText("ID Hotel:");
+
+        txtIdHotel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtIdHotel.setText("jLabel9");
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel9.setText("Rate :");
+
+        txtRate.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtRate.setText("jLabel10");
+
+        dataDetailFrom.setDateFormatString("dd-MM-yyyy");
+
+        dataDetailTo.setDateFormatString("dd-MM-yyyy");
+
+        jButton5.setText("Check Room");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jLabel15.setText("TO");
+
+        javax.swing.GroupLayout DetailHotelJFrameLayout = new javax.swing.GroupLayout(DetailHotelJFrame.getContentPane());
+        DetailHotelJFrame.getContentPane().setLayout(DetailHotelJFrameLayout);
+        DetailHotelJFrameLayout.setHorizontalGroup(
+            DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DetailHotelJFrameLayout.createSequentialGroup()
+                .addGroup(DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, DetailHotelJFrameLayout.createSequentialGroup()
+                        .addGap(227, 227, 227)
+                        .addComponent(dataDetailFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(jLabel15)
+                        .addGap(35, 35, 35)
+                        .addComponent(dataDetailTo, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(55, 55, 55)
+                        .addComponent(jButton5))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, DetailHotelJFrameLayout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addComponent(labelImager, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addGroup(DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9))
+                        .addGap(18, 18, 18)
+                        .addGroup(DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNameHotel)
+                            .addComponent(txtAddressHotel)
+                            .addComponent(txtIdHotel)
+                            .addComponent(txtRate)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, DetailHotelJFrameLayout.createSequentialGroup()
+                        .addGap(125, 125, 125)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 649, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(125, Short.MAX_VALUE))
+            .addGroup(DetailHotelJFrameLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(jLabel5)
+                .addGap(24, 756, Short.MAX_VALUE))
+        );
+        DetailHotelJFrameLayout.setVerticalGroup(
+            DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DetailHotelJFrameLayout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(jLabel5)
+                .addGap(7, 7, 7)
+                .addGroup(DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DetailHotelJFrameLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(labelImager, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(DetailHotelJFrameLayout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addGroup(DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(txtIdHotel))
+                        .addGap(18, 18, 18)
+                        .addGroup(DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(txtNameHotel))
+                        .addGap(22, 22, 22)
+                        .addGroup(DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(txtAddressHotel))
+                        .addGap(18, 18, 18)
+                        .addGroup(DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(txtRate))))
+                .addGap(33, 33, 33)
+                .addGroup(DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(dataDetailFrom, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(dataDetailTo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton5))
+                    .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(35, Short.MAX_VALUE))
+        );
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel10.setText("BOOKING");
+
+        txtDateFrom.setText("dateChecIn");
+
+        jLabel13.setText("ID type Room :");
+
+        jLabel14.setText("Name type Room :");
+
+        Combobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
+        Combobox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboboxActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Booking");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        txtDateTo.setText("dateCheckOut");
+
+        txtPrice.setText("price");
+
+        jLabel17.setText("----->");
+
+        jLabel12.setText("X");
+
+        txtTotal.setText("0");
+
+        txtIdTypeRoom.setText("jLabel15");
+
+        txtNametypeRoom.setText("jLabel15");
+
+        numberOfdate.setForeground(new java.awt.Color(255, 51, 51));
+        numberOfdate.setText("0");
+
+        jLabel16.setForeground(new java.awt.Color(255, 51, 51));
+        jLabel16.setText("Date");
+
+        javax.swing.GroupLayout BookingRoomLayout = new javax.swing.GroupLayout(BookingRoom.getContentPane());
+        BookingRoom.getContentPane().setLayout(BookingRoomLayout);
+        BookingRoomLayout.setHorizontalGroup(
+            BookingRoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BookingRoomLayout.createSequentialGroup()
+                .addContainerGap(214, Short.MAX_VALUE)
+                .addComponent(txtDateFrom)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel17)
+                .addGap(18, 18, 18)
+                .addComponent(txtDateTo)
+                .addGap(28, 28, 28)
+                .addComponent(numberOfdate)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel16)
+                .addGap(67, 67, 67))
+            .addGroup(BookingRoomLayout.createSequentialGroup()
+                .addGroup(BookingRoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(BookingRoomLayout.createSequentialGroup()
+                        .addGroup(BookingRoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel14)
+                            .addGroup(BookingRoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(BookingRoomLayout.createSequentialGroup()
+                                    .addGap(20, 20, 20)
+                                    .addComponent(jLabel10))
+                                .addGroup(BookingRoomLayout.createSequentialGroup()
+                                    .addGap(45, 45, 45)
+                                    .addComponent(jLabel13))))
+                        .addGap(30, 30, 30)
+                        .addGroup(BookingRoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtIdTypeRoom)
+                            .addComponent(txtNametypeRoom)))
+                    .addGroup(BookingRoomLayout.createSequentialGroup()
+                        .addGap(114, 114, 114)
+                        .addComponent(txtPrice)
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel12)
+                        .addGap(18, 18, 18)
+                        .addComponent(Combobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56)
+                        .addComponent(txtTotal)
+                        .addGap(50, 50, 50)
+                        .addComponent(jButton4)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        BookingRoomLayout.setVerticalGroup(
+            BookingRoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(BookingRoomLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(BookingRoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtDateFrom)
+                    .addComponent(txtDateTo)
+                    .addComponent(jLabel17)
+                    .addComponent(numberOfdate)
+                    .addComponent(jLabel16))
+                .addGap(16, 16, 16)
+                .addGroup(BookingRoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(txtIdTypeRoom))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(BookingRoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(txtNametypeRoom))
+                .addGap(27, 27, 27)
+                .addGroup(BookingRoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Combobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4)
+                    .addComponent(txtPrice)
+                    .addComponent(jLabel12)
+                    .addComponent(txtTotal))
+                .addContainerGap(37, Short.MAX_VALUE))
+        );
+
+        tableViewCart.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Name Hotel", "Name Room", "Date Check In", "NumberOfDate", "Amount Room", "Price"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(tableViewCart);
+        if (tableViewCart.getColumnModel().getColumnCount() > 0) {
+            tableViewCart.getColumnModel().getColumn(0).setPreferredWidth(30);
+            tableViewCart.getColumnModel().getColumn(3).setPreferredWidth(20);
+            tableViewCart.getColumnModel().getColumn(4).setPreferredWidth(20);
+        }
+
+        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel18.setText("CART");
+
+        txtUserName.setText("jLabel19");
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel19.setText("Total :");
+
+        txtTotalInCart.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtTotalInCart.setText("0");
+
+        jButton7.setText("BOOKING");
+
+        jButton8.setText("submit");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
+        jLabel20.setText("Discount Code :");
+
+        jLabel21.setText("VND");
+
+        jLabel22.setText("Discount :");
+
+        txtDiscount.setText("0.0");
+
+        jLabel23.setText("%");
+
+        jLabel24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel24.setText("Thanh Tiền :");
+
+        txtThanhTien.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtThanhTien.setText("0");
+
+        jLabel26.setText("VND");
+
+        txtDisDiscount.setForeground(new java.awt.Color(255, 51, 51));
+
+        jButton6.setText("Clear");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout CartJFrameLayout = new javax.swing.GroupLayout(CartJFrame.getContentPane());
+        CartJFrame.getContentPane().setLayout(CartJFrameLayout);
+        CartJFrameLayout.setHorizontalGroup(
+            CartJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CartJFrameLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel20)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtDiscountCode, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
+            .addGroup(CartJFrameLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(CartJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(CartJFrameLayout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 723, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(36, Short.MAX_VALUE))
+                    .addGroup(CartJFrameLayout.createSequentialGroup()
+                        .addComponent(jLabel18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtUserName)
+                        .addGap(54, 54, 54))))
+            .addGroup(CartJFrameLayout.createSequentialGroup()
+                .addGap(138, 138, 138)
+                .addComponent(txtDisDiscount)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CartJFrameLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(CartJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(79, 79, 79)
+                .addGroup(CartJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(CartJFrameLayout.createSequentialGroup()
+                        .addComponent(txtThanhTien)
+                        .addGap(25, 25, 25)
+                        .addComponent(jLabel26))
+                    .addGroup(CartJFrameLayout.createSequentialGroup()
+                        .addGroup(CartJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtDiscount)
+                            .addComponent(txtTotalInCart))
+                        .addGap(18, 18, 18)
+                        .addGroup(CartJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel21)
+                            .addComponent(jLabel23))))
+                .addGap(36, 36, 36))
+        );
+        CartJFrameLayout.setVerticalGroup(
+            CartJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CartJFrameLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(CartJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel18)
+                    .addComponent(txtUserName))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(CartJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel19)
+                    .addComponent(txtTotalInCart)
+                    .addComponent(jLabel21))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(CartJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel22)
+                    .addComponent(txtDiscount)
+                    .addComponent(jLabel23)
+                    .addComponent(txtDisDiscount))
+                .addGap(18, 18, 18)
+                .addGroup(CartJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel24)
+                    .addComponent(txtThanhTien)
+                    .addComponent(jLabel26))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addGroup(CartJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CartJFrameLayout.createSequentialGroup()
+                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CartJFrameLayout.createSequentialGroup()
+                        .addGroup(CartJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel20)
+                            .addComponent(txtDiscountCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton8)
+                            .addComponent(jButton6))
+                        .addGap(20, 20, 20))))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -83,15 +592,20 @@ public class BookingJFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Name Hotel", "Address hotel", "Rate"
+                "IDHotel", "Name Hotel", "Address hotel", "Rate"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+        });
+        tableViewHotel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableViewHotelMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tableViewHotel);
@@ -109,10 +623,40 @@ public class BookingJFrame extends javax.swing.JFrame {
 
         jLabel4.setText("To");
 
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/linhnd/icon/icons8_refresh_30px.png"))); // NOI18N
+        jButton3.setText("Refresh ");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setForeground(new java.awt.Color(255, 51, 51));
+        jLabel11.setText("* You need login to Booking Hotel");
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/linhnd/icon/icons8_shopping_cart_30px.png"))); // NOI18N
+        jButton2.setText("CART");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(227, 227, 227)
+                        .addComponent(jButton2)
+                        .addGap(20, 20, 20))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 625, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(104, 104, 104))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -129,41 +673,42 @@ public class BookingJFrame extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txtSearchAdressHotel, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(33, 33, 33)
-                                .addComponent(jButton1))))
+                                .addComponent(jButton1)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton3))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(130, 130, 130)
-                        .addComponent(jLabel2)))
-                .addContainerGap(113, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(320, 320, 320))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 625, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(93, 93, 93))))
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(86, 86, 86)
+                        .addComponent(jLabel11)))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(46, 46, 46)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton2))
+                .addGap(43, 43, 43)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(txtSearchAdressHotel, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSearchAdressHotel, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(dateSearchTo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(dateSearchFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(46, 46, 46)
+                .addGap(43, 43, 43)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addComponent(jLabel11)
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         pack();
@@ -173,19 +718,192 @@ public class BookingJFrame extends javax.swing.JFrame {
         String stringSearchValue = txtSearchAdressHotel.getText();
         Date dateFrom = dateSearchFrom.getDate();
         Date dateTo = dateSearchTo.getDate();
+        Date datenow = new Date();
         SearchController search = new SearchController();
         List<Hotel> listSearchHotel;
-        if (dateFrom.compareTo(dateTo) < 0) {
-            JOptionPane.showMessageDialog(this, "Pls, Choose  dateFrom > dateTo");
-        } else if (!dateFrom.equals("") && !dateTo.equals("")) {
-            try {
-                listSearchHotel = search.getListHotelVaild(stringSearchValue, dateFrom, dateTo);
-                viewTableAllHotel(listSearchHotel);
-            } catch (Exception ex) {
-                ex.printStackTrace();
+        if (dateFrom != null && dateTo != null) {
+            if (dateFrom.compareTo(datenow) < 0 && dateTo.compareTo(datenow) < 0) {
+                JOptionPane.showMessageDialog(this, "input date > date now");
+            } else {
+                if (dateFrom.compareTo(dateTo) > 0) {
+                    JOptionPane.showMessageDialog(this, "Pls, Choose  dateFrom > dateTo");
+                } else {
+                    try {
+                        listSearchHotel = search.getListHotelVaild(stringSearchValue, dateFrom, dateTo);
+                        viewTableAllHotel(listSearchHotel);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        firstController();
+        txtSearchAdressHotel.setText("");
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void tableViewHotelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableViewHotelMouseClicked
+        String imagerUrl = "/imager/";
+        int row = tableViewHotel.getSelectedRow();
+        String idHotel = (String) tableModelHotel.getValueAt(row, 0);
+        DetailHotelJFrame.setSize(900, 600);
+        DetailHotelJFrame.setVisible(true);
+        DetailHotelJFrame.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
+        try {
+            HotelDAO dao = new HotelDAO();
+            Hotel dto = dao.getHotelByID(idHotel);
+            imagerUrl = imagerUrl + dto.getImagerName();
+            try {
+                labelImager.setIcon(new javax.swing.ImageIcon(getClass().getResource(imagerUrl)));
+            } catch (Exception e) {
+                labelImager.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imager/1.jpg")));
+            }
+            txtIdHotel.setText(dto.getHotelID());
+            txtNameHotel.setText(dto.getNameHotel());
+            txtAddressHotel.setText(dto.getAddressHotel());
+            txtRate.setText(String.valueOf(dto.getRateHotel()));
+            KindOfRoomDAO kindOfRoomdao = new KindOfRoomDAO();
+            List<KindOfRoom> resultKindOfRoom = kindOfRoomdao.getListKindOfRoom(idHotel);
+            viewDetailRoomInHotel(resultKindOfRoom);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tableViewHotelMouseClicked
+
+    private void TableViewTypeRoomInHotelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableViewTypeRoomInHotelMouseClicked
+
+        if (checkSearch) {
+            int row = TableViewTypeRoomInHotel.getSelectedRow();
+            String idRoom = (String) tableModelRoomInHotel.getValueAt(row, 0);
+            try {
+                KindOfRoomDAO dao = new KindOfRoomDAO();
+                KindOfRoom dto = dao.getDetailKindOfRoom(idRoom);
+                BookingRoom.setSize(540, 250);
+                BookingRoom.setVisible(true);
+                BookingRoom.setLocation(dim.width / 2 - BookingRoom.getSize().width / 2, dim.height / 2 - BookingRoom.getSize().height / 2);
+                txtDateFrom.setText(new SimpleDateFormat("dd-MM-yyyy").format(dataDetailFrom.getDate()));
+                txtDateTo.setText(new SimpleDateFormat("dd-MM-yyyy").format(dataDetailTo.getDate()));
+                txtIdTypeRoom.setText(dto.getIdKindRoom());
+                txtNametypeRoom.setText(dto.getNameKindRoom());
+                txtPrice.setText(dto.getPriceOfRoom());
+                numberOfdate.setText(String.valueOf((dataDetailTo.getDate().getDate() - dataDetailFrom.getDate().getDate())));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Pls, Check Room before booking");
+        }
+
+    }//GEN-LAST:event_TableViewTypeRoomInHotelMouseClicked
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        Date dateDetailFrom = dataDetailFrom.getDate();
+        Date dateDetailTo = dataDetailTo.getDate();
+        String idHotel = txtIdHotel.getText();
+        Date dateNow = new Date();
+        if (dateDetailFrom != null && dateDetailTo != null) {
+            if (dateDetailFrom.compareTo(dateNow) > 0 && dateDetailTo.compareTo(dateNow) > 0) {
+                long numberOfDate = dataDetailTo.getDate().getDate() - dataDetailFrom.getDate().getDate();
+                if (numberOfDate >= 0) {
+                    try {
+                        SearchController search = new SearchController();
+                        List<KindOfRoom> result = search.checkKindOfRoom(dateDetailFrom, dateDetailTo, idHotel);
+                        JOptionPane.showMessageDialog(this, "check Done");
+                        viewDetailRoomInHotel(result);
+                        checkSearch = true;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "input date From != date To");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Choose Date > date now");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "input Date");
+        }
+
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void ComboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboboxActionPerformed
+        int price = Integer.parseInt(txtPrice.getText());
+        int quantity = Integer.parseInt(Combobox.getSelectedItem().toString());
+        long numberOfDate = dataDetailTo.getDate().getDate() - dataDetailFrom.getDate().getDate();
+        float total = price * quantity * numberOfDate;
+        txtTotal.setText(String.valueOf(total));
+    }//GEN-LAST:event_ComboboxActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        String idHotel = txtIdHotel.getText();
+        String idKindOfRoom = txtIdTypeRoom.getText();
+        String numberOfRoom = Combobox.getSelectedItem().toString();
+        String numberOfDate = numberOfdate.getText();
+        Date dateFrom = dataDetailFrom.getDate();
+        String total = txtTotal.getText();
+        String nameHotel = txtNameHotel.getText();
+        String namekindOfRoom = txtNametypeRoom.getText();
+        if (!numberOfRoom.equals("0")) {
+            CartBookingDTO dto = new CartBookingDTO(idHotel, nameHotel, idKindOfRoom, namekindOfRoom, numberOfDate, numberOfRoom, total, dateFrom, dateFrom);
+            listCart.add(dto);
+            JOptionPane.showMessageDialog(this, "Booking sucessfull !");
+            BookingRoom.setVisible(false);
+            DetailHotelJFrame.setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(this, "Select Amount Room !");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        CartJFrame.setSize(800, 500);
+        CartJFrame.setVisible(true);
+        CartJFrame.setLocation(dim.width / 2 - CartJFrame.getSize().width / 2, dim.height / 2 - CartJFrame.getSize().height / 2);
+        float countTotal = 0;
+        for (CartBookingDTO cartBookingDTO : listCart) {
+            countTotal = countTotal + Float.parseFloat(cartBookingDTO.getTotal());
+        }
+        txtTotalInCart.setText(String.valueOf(countTotal));
+        txtUserName.setText(UserDTO.Username);
+        viewCart(listCart);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        String discountCode = this.txtDiscountCode.getText();
+        if (!discountCode.equals("")) {
+            try {
+                DiscountDAO dao = new DiscountDAO();
+                Discount dto = dao.getDiscount(discountCode, UserDTO.Username);
+                this.txtDiscountCode.setEditable(false);
+                txtDiscount.setText(String.valueOf(dto.getPercentDiscount()));
+                txtDisDiscount.setText(dto.getDesDiscount());
+                float total = Float.parseFloat(txtTotalInCart.getText());
+                float discount = (float) dto.getPercentDiscount()/100;
+                txtThanhTien.setText(String.valueOf(total*discount));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Code Invalid");
+                e.printStackTrace();
+            }
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        txtDiscountCode.setEditable(true);
+        txtDiscountCode.setText("");
+        txtDisDiscount.setText("");
+        txtDiscount.setText("0.0");
+        txtThanhTien.setText(txtTotal.getText());
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -224,15 +942,71 @@ public class BookingJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFrame BookingRoom;
+    private javax.swing.JFrame CartJFrame;
+    private javax.swing.JComboBox<String> Combobox;
+    private javax.swing.JFrame DetailHotelJFrame;
+    private javax.swing.JTable TableViewTypeRoomInHotel;
+    private com.toedter.calendar.JDateChooser dataDetailFrom;
+    private com.toedter.calendar.JDateChooser dataDetailTo;
     private com.toedter.calendar.JDateChooser dateSearchFrom;
     private com.toedter.calendar.JDateChooser dateSearchTo;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel labelImager;
+    private javax.swing.JLabel numberOfdate;
+    private javax.swing.JTable tableViewCart;
     private javax.swing.JTable tableViewHotel;
+    private javax.swing.JLabel txtAddressHotel;
+    private javax.swing.JLabel txtDateFrom;
+    private javax.swing.JLabel txtDateTo;
+    private javax.swing.JLabel txtDisDiscount;
+    private javax.swing.JLabel txtDiscount;
+    private javax.swing.JTextField txtDiscountCode;
+    private javax.swing.JLabel txtIdHotel;
+    private javax.swing.JLabel txtIdTypeRoom;
+    private javax.swing.JLabel txtNameHotel;
+    private javax.swing.JLabel txtNametypeRoom;
+    private javax.swing.JLabel txtPrice;
+    private javax.swing.JLabel txtRate;
     private javax.swing.JTextField txtSearchAdressHotel;
+    private javax.swing.JLabel txtThanhTien;
+    private javax.swing.JLabel txtTotal;
+    private javax.swing.JLabel txtTotalInCart;
+    private javax.swing.JLabel txtUserName;
     // End of variables declaration//GEN-END:variables
 }

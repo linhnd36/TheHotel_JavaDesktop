@@ -10,11 +10,9 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.Query;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TemporalType;
 import linhnd.dtos.Booking;
-import linhnd.dtos.Hotel;
 
 /**
  *
@@ -44,6 +42,23 @@ public class BookingDAO implements Serializable {
         //trả về list booking có trong 2 ngày AB
     }
 
+    public List<Booking> getListBookingInHotel(Date dateFrom, Date dateTo, String idHotel) throws Exception {
+        EntityManager em = getEntityManager();
+        List<Booking> resutl = null;
+        try {
+            Query query = em.createQuery("SELECT b FROM Booking b,DetailBooking d WHERE b.idBooking NOT IN (SELECT b.idBooking FROM Booking b WHERE b.dateBookingFrom >= :dateCheckOut OR b.dateBookingTo <= :dateCheckIn ) AND b.statusBooking = 'checking' AND b.idBooking = d.booking.idBooking AND d.hotel.hotelID = :IdHotel ");
+            query.setParameter("dateCheckOut", dateTo, TemporalType.DATE);
+            query.setParameter("dateCheckIn", dateFrom, TemporalType.DATE);
+            query.setParameter("IdHotel", idHotel);
+            resutl = query.getResultList();
+        } finally {
+            em.close();
+        }
+        return resutl;
+        //trả về list booking của 1 khách sạn trong 2 ngày AB
+    }
+
+    // lấy những booking đang có ở ngày now và check phòng xem còn không thì mới show lên firstController
     public List<Booking> getListBookingNow() throws Exception {
         EntityManager em = getEntityManager();
         List<Booking> result = null;

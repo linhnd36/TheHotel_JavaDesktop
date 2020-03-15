@@ -22,6 +22,7 @@ public class KindOfRoomDAO implements Serializable{
         return Persistence.createEntityManagerFactory("BookingHotelPU").createEntityManager();
     }
     
+    
     public List<KindOfRoom> getListKindOfRoom(String IdHotel) throws Exception{
         em = getEntityManager();
         List<KindOfRoom> resultList = null;
@@ -29,11 +30,23 @@ public class KindOfRoomDAO implements Serializable{
             Query query = em.createQuery("SELECT k FROM KindOfRoom k WHERE k.idKindRoom IN (SELECT DISTINCT r.roomInHotelPK.idKindRoom FROM RoomInHotel r WHERE r.hotel.hotelID = ?1  ) ");
             query.setParameter(1, IdHotel);
             resultList = query.getResultList();
-            System.out.println(resultList.size());
         }finally{
             em.close();
         }
         return resultList;
     }
+    public KindOfRoom getDetailKindOfRoom(String idKindRoom) throws Exception{
+        em = getEntityManager();
+        KindOfRoom result = null;
+        try {
+            Query query = em.createQuery(" SELECT k FROM KindOfRoom k WHERE k.idKindRoom = ?1 ");
+            query.setParameter(1, idKindRoom);
+            result = (KindOfRoom) query.getSingleResult();
+        }finally{
+            em.close();
+        }
+        return result;
+    }
+    
     
 }

@@ -40,7 +40,7 @@ public class HotelDAO implements Serializable {
         }
         return dto;
     }
-
+    // tìm những khách sạn nằm trong booking giữa 2 ngày ab để check xem những khách sạn đó còn phòng hay không
     public Map<String, String> getIdHotelByIdBooking(List<Booking> listBooking) throws Exception {
         em = getEntityManager();
         Map<String, String> result = new HashMap<>();
@@ -58,19 +58,18 @@ public class HotelDAO implements Serializable {
     }
 
     public List<Hotel> getlistHotelSearch(List<String> listIdHotelNotValid, String textSearch) throws Exception {
-
         em = getEntityManager();
         List<Hotel> result = null;
         try {
             String jsql = null;
             if (listIdHotelNotValid.isEmpty()) {
-                jsql = "SELECT DISTINCT h FROM Hotel h WHERE h.nameHotel LIKE :textSearch OR h.addressHotel LIKE :textSearch ORDER BY h.rateHotel ";
+                jsql = "SELECT DISTINCT h FROM Hotel h WHERE h.nameHotel LIKE :textSearch OR h.addressHotel LIKE :textSearch ORDER BY h.rateHotel DESC ";
                 Query query = em.createQuery(jsql);
                 query.setParameter("textSearch", "%" + textSearch + "%");
                 result = query.getResultList();
                 return result;
             } else {
-                jsql = "SELECT DISTINCT h FROM Hotel h WHERE h.hotelID NOT IN (:listHotelNotValid) h.nameHotel LIKE :textSearch OR h.addressHotel LIKE :textSearch ORDER BY h.rateHotel ";
+                jsql = "SELECT DISTINCT h FROM Hotel h WHERE h.hotelID NOT IN (:listHotelNotValid) h.nameHotel LIKE :textSearch OR h.addressHotel LIKE :textSearch ORDER BY h.rateHotel DESC ";
                 Query query = em.createQuery(jsql);
                 query.setParameter("listHotelNotValid", listIdHotelNotValid);
                 query.setParameter("textSearch", "%" + textSearch + "%");
@@ -89,12 +88,12 @@ public class HotelDAO implements Serializable {
         try {
             String jsql = null;
             if (listIdHotelNotValid.isEmpty()) {
-                jsql = "SELECT h FROM Hotel h ORDER BY h.rateHotel ";
+                jsql = "SELECT h FROM Hotel h ORDER BY h.rateHotel DESC ";
                 Query query = em.createQuery(jsql);
                 result = query.getResultList();
                 return result;
             } else {
-                jsql = "SELECT h FROM Hotel h WHERE h.hotelID NOT IN (:listHotelNotValid) ORDER BY h.rateHotel ";
+                jsql = "SELECT h FROM Hotel h WHERE h.hotelID NOT IN (:listHotelNotValid) ORDER BY h.rateHotel DESC ";
                 Query query = em.createQuery(jsql);
                 query.setParameter("listHotelNotValid", listIdHotelNotValid);
                 result = query.getResultList();
