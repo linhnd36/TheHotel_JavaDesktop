@@ -8,11 +8,14 @@ package linhnd.daos;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.TemporalType;
 import linhnd.dtos.Booking;
+import sun.util.logging.resources.logging;
 
 /**
  *
@@ -72,6 +75,22 @@ public class BookingDAO implements Serializable {
         }
         return result;
 
+    }
+    
+    public boolean insertBooking(Booking dto) throws Exception{
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(dto);
+            em.getTransaction().commit();
+            
+        }catch(Exception ex){
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE,"exception caught",ex);
+            ex.printStackTrace();
+        }finally{
+            em.close();
+        }
+        return true;
     }
 
 }

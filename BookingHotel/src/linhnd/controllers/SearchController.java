@@ -24,7 +24,7 @@ import linhnd.dtos.KindOfRoom;
  * @author Duc Linh
  */
 public class SearchController implements Serializable {
-
+// tìm những khách sạn hợp lệ theo seảch của khách hàng
     public List<Hotel> getListHotelVaild(String textSearch, Date dateFrom, Date dateTo) throws Exception {
         Map<String, String> resultMapIdBookIdHotel = null;
         List<Booking> resultBooking = null;
@@ -51,7 +51,7 @@ public class SearchController implements Serializable {
         }
         return listHotelValid;
     }
-
+// kiểm tra những khách sạn còn phòng hợp lệ để show những khách sạn đó lên vào lúc bắt đầu
     public List<Hotel> getListHotelVaildNow() throws Exception {
         Map<String, String> resultMapIdBookIdHotel = null;
         List<Booking> resultBooking = null;
@@ -78,7 +78,7 @@ public class SearchController implements Serializable {
         }
         return listHotelValid;
     }
-
+    // kiểm tra những loại phòng còn để cho khách book
     public List<KindOfRoom> checkKindOfRoom(Date dateFrom, Date dateTo, String idHotel) throws Exception {
         List<Booking> resultBooking = null;
         List<KindOfRoom> listKindOfRoomlValid = new ArrayList<>();
@@ -103,5 +103,25 @@ public class SearchController implements Serializable {
             e.printStackTrace();
         }
         return listKindOfRoomlValid;
+    }
+    // tính số phòng của 1 loại phòng còn lại thỏa mãn có thể book đc 
+    public int checkNumberKindOfRoom(Date dateFrom, Date dateTo, String idHotel, String idkindOfRoom) throws Exception {
+        List<Booking> resultBooking = null;
+        int count = 0;
+        try {
+            BookingDAO bookingDAO = new BookingDAO();
+            RoomInHotelDAO roomInHotelDAO = new RoomInHotelDAO();
+            resultBooking = bookingDAO.getListBookingInHotel(dateFrom, dateTo, idHotel);
+            int countKindOfRoomBooking = 0;
+            int countKindOfRoom = roomInHotelDAO.countOfRoomInHotel(idkindOfRoom);
+            for (Booking booking : resultBooking) {
+                countKindOfRoomBooking = countKindOfRoomBooking + roomInHotelDAO.countKindOfRoomBooking(idkindOfRoom, idHotel, booking.getIdBooking());
+            }
+            count = countKindOfRoom - countKindOfRoomBooking;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 }

@@ -11,6 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import linhnd.controllers.SearchController;
@@ -1057,12 +1059,12 @@ public class BookingJFrame extends javax.swing.JFrame {
         String total = txtTotal.getText();
         String nameHotel = txtNameHotel.getText();
         String namekindOfRoom = txtNametypeRoom.getText();
+        int check = 0;
         if (!numberOfRoom.equals("0")) {
             CartBookingDTO dto = new CartBookingDTO(idHotel, nameHotel, idKindOfRoom, namekindOfRoom, numberOfDate, numberOfRoom, total, idHotel + idKindOfRoom, dateFrom, dateFrom);
             listCart.add(dto);
             JOptionPane.showMessageDialog(this, "Booking sucessfull !");
             BookingRoom.setVisible(false);
-            DetailHotelJFrame.setVisible(false);
         } else {
             JOptionPane.showMessageDialog(this, "Select Amount Room !");
         }
@@ -1186,6 +1188,7 @@ public class BookingJFrame extends javax.swing.JFrame {
             txtDisDiscount.setText("");
             txtDiscount.setText("0");
             txtThanhTien.setText(String.valueOf(countTotal));
+            DetailBooking.setVisible(false);
             viewCart(listCart);
         } else {
             JOptionPane.showMessageDialog(this, "input int > 0");
@@ -1211,7 +1214,37 @@ public class BookingJFrame extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         //Booking
-        
+        String errors = "";
+        SearchController search = new SearchController();
+        int amountBook = 0;
+        int amountkindOfRoomVaild = 0;
+        for (CartBookingDTO cartBookingDTO : listCart) {
+            amountBook = Integer.parseInt(cartBookingDTO.getNumberOfRoom());
+            try {
+                amountkindOfRoomVaild = search.checkNumberKindOfRoom(cartBookingDTO.getDateFrom(), cartBookingDTO.getDateTo(), cartBookingDTO.getIdHotel(), cartBookingDTO.getIdKindOfRoom());
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (amountBook > amountkindOfRoomVaild) {
+                errors = errors + cartBookingDTO.getIdKindOfRoom() + " in " + cartBookingDTO.getNameHotel() + " have only " + amountkindOfRoomVaild;
+            }
+        }
+        if (errors.equals("")) {
+            //insert table Booking
+                //chia nhỏ Booking theo dạng nếu khác ngày check in thì tách booking nếu khác khách sạn tác luôn
+            float countTotal = 0;
+            for (int i = 0; i < listCart.size(); i++) {
+                System.out.println(listCart.get(i).getDateFrom().compareTo(listCart.get(i+1).getDateFrom()));
+                System.out.println(listCart.get(i).getDateTo().compareTo(listCart.get(i+1).getDateTo()));
+            }
+            
+
+            // insert table detail Booking 
+            //change status table UserhaveDiscount
+        } else {
+            JOptionPane.showMessageDialog(this, errors);
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
 
