@@ -383,6 +383,7 @@ public class WelcomeJFrame extends javax.swing.JFrame {
         int row = tableViewHotel.getSelectedRow();
         String idHotel = (String) tableModelHotel.getValueAt(row, 0);
         DetailHotelJFrame.setSize(900, 600);
+        DetailHotelJFrame.setLocation(dim.width / 2 - DetailHotelJFrame.getSize().width / 2, dim.height / 2 - DetailHotelJFrame.getSize().height / 2);
         DetailHotelJFrame.setVisible(true);
         try {
             HotelDAO dao = new HotelDAO();

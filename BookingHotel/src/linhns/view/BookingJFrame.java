@@ -14,7 +14,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import linhnd.controllers.SearchController;
-import linhnd.daos.CartBookingDTO;
+import linhnd.dtos.CartBookingDTO;
 import linhnd.daos.DiscountDAO;
 import linhnd.daos.HotelDAO;
 import linhnd.daos.KindOfRoomDAO;
@@ -33,6 +33,8 @@ public class BookingJFrame extends javax.swing.JFrame {
     DefaultTableModel tableModelRoomInHotel = null;
     DefaultTableModel tableModelCart = null;
     private List<CartBookingDTO> listCart = new ArrayList<>();
+    CartBookingDTO dtoResult = null;
+    String index = null;
     private boolean checkSearch = false;
     Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 
@@ -142,6 +144,29 @@ public class BookingJFrame extends javax.swing.JFrame {
         jLabel26 = new javax.swing.JLabel();
         txtDisDiscount = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
+        DetailBooking = new javax.swing.JFrame();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        dateDetailBookingFrom = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        dateDetailBookingTo = new javax.swing.JLabel();
+        txtusernameDetailBooking = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        txtnumberOfdateInDetail = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        txtTotalInDetailBooking = new javax.swing.JLabel();
+        jButton11 = new javax.swing.JButton();
+        txtNameHotelDB = new javax.swing.JLabel();
+        txtNameRoomDB = new javax.swing.JLabel();
+        txtAmountRoom = new javax.swing.JLabel();
+        jButton12 = new javax.swing.JButton();
+        jButton13 = new javax.swing.JButton();
         txtSearchAdressHotel = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -224,8 +249,8 @@ public class BookingJFrame extends javax.swing.JFrame {
         DetailHotelJFrameLayout.setHorizontalGroup(
             DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DetailHotelJFrameLayout.createSequentialGroup()
-                .addGroup(DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, DetailHotelJFrameLayout.createSequentialGroup()
+                .addGroup(DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DetailHotelJFrameLayout.createSequentialGroup()
                         .addGap(227, 227, 227)
                         .addComponent(dataDetailFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(28, 28, 28)
@@ -234,7 +259,7 @@ public class BookingJFrame extends javax.swing.JFrame {
                         .addComponent(dataDetailTo, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(55, 55, 55)
                         .addComponent(jButton5))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, DetailHotelJFrameLayout.createSequentialGroup()
+                    .addGroup(DetailHotelJFrameLayout.createSequentialGroup()
                         .addGap(67, 67, 67)
                         .addComponent(labelImager, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27)
@@ -249,14 +274,13 @@ public class BookingJFrame extends javax.swing.JFrame {
                             .addComponent(txtAddressHotel)
                             .addComponent(txtIdHotel)
                             .addComponent(txtRate)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, DetailHotelJFrameLayout.createSequentialGroup()
+                    .addGroup(DetailHotelJFrameLayout.createSequentialGroup()
                         .addGap(125, 125, 125)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 649, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 649, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(DetailHotelJFrameLayout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(jLabel5)))
                 .addContainerGap(125, Short.MAX_VALUE))
-            .addGroup(DetailHotelJFrameLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jLabel5)
-                .addGap(24, 756, Short.MAX_VALUE))
         );
         DetailHotelJFrameLayout.setVerticalGroup(
             DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -420,11 +444,11 @@ public class BookingJFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Name Hotel", "Name Room", "Date Check In", "NumberOfDate", "Amount Room", "Price"
+                "Id", "Name Hotel", "Name Room", "Date Check In", "NumberOfDate", "Amount Room", "Price"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -434,8 +458,9 @@ public class BookingJFrame extends javax.swing.JFrame {
         jScrollPane3.setViewportView(tableViewCart);
         if (tableViewCart.getColumnModel().getColumnCount() > 0) {
             tableViewCart.getColumnModel().getColumn(0).setPreferredWidth(30);
-            tableViewCart.getColumnModel().getColumn(3).setPreferredWidth(20);
+            tableViewCart.getColumnModel().getColumn(1).setPreferredWidth(30);
             tableViewCart.getColumnModel().getColumn(4).setPreferredWidth(20);
+            tableViewCart.getColumnModel().getColumn(5).setPreferredWidth(20);
         }
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -450,6 +475,11 @@ public class BookingJFrame extends javax.swing.JFrame {
         txtTotalInCart.setText("0");
 
         jButton7.setText("BOOKING");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jButton8.setText("submit");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
@@ -485,6 +515,20 @@ public class BookingJFrame extends javax.swing.JFrame {
             }
         });
 
+        jButton9.setText("Delete From Cart");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+
+        jButton10.setText("Changer Booking");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout CartJFrameLayout = new javax.swing.GroupLayout(CartJFrame.getContentPane());
         CartJFrame.getContentPane().setLayout(CartJFrameLayout);
         CartJFrameLayout.setHorizontalGroup(
@@ -502,8 +546,41 @@ public class BookingJFrame extends javax.swing.JFrame {
                 .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
             .addGroup(CartJFrameLayout.createSequentialGroup()
+                .addGap(138, 138, 138)
+                .addComponent(txtDisDiscount)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(CartJFrameLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(CartJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CartJFrameLayout.createSequentialGroup()
+                        .addGroup(CartJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(CartJFrameLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 504, Short.MAX_VALUE)
+                                .addGroup(CartJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.TRAILING)))
+                            .addGroup(CartJFrameLayout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel19)))
+                        .addGap(79, 79, 79)
+                        .addGroup(CartJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(CartJFrameLayout.createSequentialGroup()
+                                .addComponent(txtThanhTien)
+                                .addGap(25, 25, 25)
+                                .addComponent(jLabel26))
+                            .addGroup(CartJFrameLayout.createSequentialGroup()
+                                .addGroup(CartJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtDiscount)
+                                    .addComponent(txtTotalInCart))
+                                .addGap(18, 18, 18)
+                                .addGroup(CartJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel21)
+                                    .addComponent(jLabel23))))
+                        .addGap(36, 36, 36))
                     .addGroup(CartJFrameLayout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 723, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(36, Short.MAX_VALUE))
@@ -512,31 +589,6 @@ public class BookingJFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txtUserName)
                         .addGap(54, 54, 54))))
-            .addGroup(CartJFrameLayout.createSequentialGroup()
-                .addGap(138, 138, 138)
-                .addComponent(txtDisDiscount)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CartJFrameLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(CartJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(79, 79, 79)
-                .addGroup(CartJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(CartJFrameLayout.createSequentialGroup()
-                        .addComponent(txtThanhTien)
-                        .addGap(25, 25, 25)
-                        .addComponent(jLabel26))
-                    .addGroup(CartJFrameLayout.createSequentialGroup()
-                        .addGroup(CartJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtDiscount)
-                            .addComponent(txtTotalInCart))
-                        .addGap(18, 18, 18)
-                        .addGroup(CartJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel21)
-                            .addComponent(jLabel23))))
-                .addGap(36, 36, 36))
         );
         CartJFrameLayout.setVerticalGroup(
             CartJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -548,10 +600,13 @@ public class BookingJFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(CartJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel19)
-                    .addComponent(txtTotalInCart)
-                    .addComponent(jLabel21))
+                .addGroup(CartJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(CartJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel19)
+                        .addComponent(txtTotalInCart)
+                        .addComponent(jLabel21)
+                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(CartJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel22)
@@ -563,7 +618,7 @@ public class BookingJFrame extends javax.swing.JFrame {
                     .addComponent(jLabel24)
                     .addComponent(txtThanhTien)
                     .addComponent(jLabel26))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addGap(42, 42, 42)
                 .addGroup(CartJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CartJFrameLayout.createSequentialGroup()
                         .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -575,6 +630,159 @@ public class BookingJFrame extends javax.swing.JFrame {
                             .addComponent(jButton8)
                             .addComponent(jButton6))
                         .addGap(20, 20, 20))))
+        );
+
+        jLabel25.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel25.setText("Detail Booking");
+
+        jLabel27.setText("Name Hotel :");
+
+        jLabel28.setText("Name Room :");
+
+        jLabel29.setText("Date From");
+
+        dateDetailBookingFrom.setText("date");
+
+        jLabel30.setText("To");
+
+        dateDetailBookingTo.setText("date");
+
+        txtusernameDetailBooking.setText("jLabel31");
+
+        jLabel31.setText("Number of date :");
+
+        txtnumberOfdateInDetail.setText("0");
+
+        jLabel32.setText("day");
+
+        jLabel33.setText("Amount Room :");
+
+        jLabel34.setText("ToTal :");
+
+        txtTotalInDetailBooking.setText("0");
+
+        jButton11.setText("UPDATE");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
+
+        txtNameHotelDB.setText("jLabel35");
+
+        txtNameRoomDB.setText("jLabel35");
+
+        txtAmountRoom.setText("0");
+
+        jButton12.setText("+");
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
+            }
+        });
+
+        jButton13.setText("-");
+        jButton13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton13ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout DetailBookingLayout = new javax.swing.GroupLayout(DetailBooking.getContentPane());
+        DetailBooking.getContentPane().setLayout(DetailBookingLayout);
+        DetailBookingLayout.setHorizontalGroup(
+            DetailBookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DetailBookingLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel25)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtusernameDetailBooking)
+                .addGap(33, 33, 33))
+            .addGroup(DetailBookingLayout.createSequentialGroup()
+                .addGroup(DetailBookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DetailBookingLayout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addGroup(DetailBookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel29)
+                            .addComponent(jLabel28)
+                            .addComponent(jLabel27)))
+                    .addGroup(DetailBookingLayout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addGroup(DetailBookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel33)
+                            .addComponent(jLabel31)
+                            .addComponent(jLabel34))))
+                .addGap(47, 47, 47)
+                .addGroup(DetailBookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DetailBookingLayout.createSequentialGroup()
+                        .addComponent(txtnumberOfdateInDetail)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel32))
+                    .addComponent(txtTotalInDetailBooking)
+                    .addGroup(DetailBookingLayout.createSequentialGroup()
+                        .addGroup(DetailBookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton11)
+                            .addGroup(DetailBookingLayout.createSequentialGroup()
+                                .addGroup(DetailBookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(DetailBookingLayout.createSequentialGroup()
+                                        .addComponent(dateDetailBookingFrom)
+                                        .addGap(56, 56, 56))
+                                    .addGroup(DetailBookingLayout.createSequentialGroup()
+                                        .addComponent(jButton13)
+                                        .addGap(25, 25, 25)))
+                                .addGroup(DetailBookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtAmountRoom)
+                                    .addComponent(jLabel30))))
+                        .addGroup(DetailBookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(DetailBookingLayout.createSequentialGroup()
+                                .addGap(31, 31, 31)
+                                .addComponent(dateDetailBookingTo))
+                            .addGroup(DetailBookingLayout.createSequentialGroup()
+                                .addGap(23, 23, 23)
+                                .addComponent(jButton12))))
+                    .addComponent(txtNameHotelDB)
+                    .addComponent(txtNameRoomDB))
+                .addContainerGap(125, Short.MAX_VALUE))
+        );
+        DetailBookingLayout.setVerticalGroup(
+            DetailBookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DetailBookingLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(DetailBookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel25)
+                    .addComponent(txtusernameDetailBooking))
+                .addGap(18, 18, 18)
+                .addGroup(DetailBookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel27)
+                    .addComponent(txtNameHotelDB))
+                .addGap(18, 18, 18)
+                .addGroup(DetailBookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel28)
+                    .addComponent(txtNameRoomDB))
+                .addGap(18, 18, 18)
+                .addGroup(DetailBookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel29)
+                    .addComponent(dateDetailBookingFrom)
+                    .addComponent(jLabel30)
+                    .addComponent(dateDetailBookingTo))
+                .addGap(18, 18, 18)
+                .addGroup(DetailBookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel31)
+                    .addComponent(txtnumberOfdateInDetail)
+                    .addComponent(jLabel32))
+                .addGap(18, 18, 18)
+                .addGroup(DetailBookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel33)
+                    .addComponent(txtAmountRoom)
+                    .addComponent(jButton12)
+                    .addComponent(jButton13))
+                .addGap(38, 38, 38)
+                .addGroup(DetailBookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel34)
+                    .addComponent(txtTotalInDetailBooking))
+                .addGap(18, 18, 18)
+                .addComponent(jButton11)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -850,7 +1058,7 @@ public class BookingJFrame extends javax.swing.JFrame {
         String nameHotel = txtNameHotel.getText();
         String namekindOfRoom = txtNametypeRoom.getText();
         if (!numberOfRoom.equals("0")) {
-            CartBookingDTO dto = new CartBookingDTO(idHotel, nameHotel, idKindOfRoom, namekindOfRoom, numberOfDate, numberOfRoom, total, dateFrom, dateFrom);
+            CartBookingDTO dto = new CartBookingDTO(idHotel, nameHotel, idKindOfRoom, namekindOfRoom, numberOfDate, numberOfRoom, total, idHotel + idKindOfRoom, dateFrom, dateFrom);
             listCart.add(dto);
             JOptionPane.showMessageDialog(this, "Booking sucessfull !");
             BookingRoom.setVisible(false);
@@ -870,6 +1078,7 @@ public class BookingJFrame extends javax.swing.JFrame {
             countTotal = countTotal + Float.parseFloat(cartBookingDTO.getTotal());
         }
         txtTotalInCart.setText(String.valueOf(countTotal));
+        txtThanhTien.setText(String.valueOf(countTotal));
         txtUserName.setText(UserDTO.Username);
         viewCart(listCart);
         // TODO add your handling code here:
@@ -885,8 +1094,8 @@ public class BookingJFrame extends javax.swing.JFrame {
                 txtDiscount.setText(String.valueOf(dto.getPercentDiscount()));
                 txtDisDiscount.setText(dto.getDesDiscount());
                 float total = Float.parseFloat(txtTotalInCart.getText());
-                float discount = (float) dto.getPercentDiscount()/100;
-                txtThanhTien.setText(String.valueOf(total*discount));
+                float discount = (float) dto.getPercentDiscount() / 100;
+                txtThanhTien.setText(String.valueOf(total * discount));
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Code Invalid");
                 e.printStackTrace();
@@ -901,9 +1110,110 @@ public class BookingJFrame extends javax.swing.JFrame {
         txtDiscountCode.setText("");
         txtDisDiscount.setText("");
         txtDiscount.setText("0.0");
-        txtThanhTien.setText(txtTotal.getText());
+        txtThanhTien.setText(txtTotalInCart.getText());
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        int row = tableViewCart.getSelectedRow();
+        if (row >= 0) {
+            String id = (String) tableModelCart.getValueAt(row, 0);
+            for (int i = 0; i < listCart.size(); i++) {
+                if (id.equals(listCart.get(i).getiD())) {
+                    int confirm = JOptionPane.showConfirmDialog(this, "Do you want delete booking " + id + " from your cart");
+                    if (confirm == JOptionPane.YES_OPTION) {
+                        listCart.remove(i);
+                        viewCart(listCart);
+                        float countTotal = 0;
+                        for (CartBookingDTO cartBookingDTO : listCart) {
+                            countTotal = countTotal + Float.parseFloat(cartBookingDTO.getTotal());
+                        }
+                        txtTotalInCart.setText(String.valueOf(countTotal));
+                        txtDisDiscount.setText("");
+                        txtDiscount.setText("0");
+                        txtThanhTien.setText(String.valueOf(countTotal));
+                    }
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Pls, Select Row");
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        int row = tableViewCart.getSelectedRow();
+        if (row >= 0) {
+            String id = (String) tableModelCart.getValueAt(row, 0);
+            for (int i = 0; i < listCart.size(); i++) {
+                if (id.equals(listCart.get(i).getiD())) {
+                    index = String.valueOf(i);
+                }
+            }
+            dtoResult = listCart.get(Integer.parseInt(index));
+            DetailBooking.setSize(500, 400);
+            DetailBooking.setLocation(dim.width / 2 - DetailBooking.getSize().width / 2, dim.height / 2 - DetailBooking.getSize().height / 2);
+            DetailBooking.setVisible(true);
+            txtusernameDetailBooking.setText(UserDTO.Username);
+            txtNameHotelDB.setText(dtoResult.getNameHotel());
+            txtNameRoomDB.setText(dtoResult.getNamekindOfRoom());
+            dateDetailBookingFrom.setText(new SimpleDateFormat("dd-MM-yyyy").format(dtoResult.getDateFrom()));
+            dateDetailBookingTo.setText(new SimpleDateFormat("dd-MM-yyyy").format(dtoResult.getDateTo()));
+            txtnumberOfdateInDetail.setText(dtoResult.getNumberOfDate());
+            txtAmountRoom.setText(dtoResult.getNumberOfRoom());
+            txtTotalInDetailBooking.setText(dtoResult.getTotal());
+        } else {
+            JOptionPane.showMessageDialog(this, "Select row !");
+        }
+
+
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        String amountRoomUpdateS = txtAmountRoom.getText();
+        int amountRoomUpdate = Integer.parseInt(amountRoomUpdateS);
+        if (amountRoomUpdate > 0) {
+            float newTotal = (float) ((Float.parseFloat(dtoResult.getTotal()) / Integer.parseInt(dtoResult.getNumberOfRoom())) * amountRoomUpdate);
+            txtTotalInDetailBooking.setText(String.valueOf(newTotal));
+            listCart.get(Integer.parseInt(index)).setTotal(String.valueOf(newTotal));
+            listCart.get(Integer.parseInt(index)).setNumberOfRoom(String.valueOf(amountRoomUpdate));
+            float countTotal = 0;
+            for (CartBookingDTO cartBookingDTO : listCart) {
+                countTotal = countTotal + Float.parseFloat(cartBookingDTO.getTotal());
+            }
+            txtTotalInCart.setText(String.valueOf(countTotal));
+            txtDisDiscount.setText("");
+            txtDiscount.setText("0");
+            txtThanhTien.setText(String.valueOf(countTotal));
+            viewCart(listCart);
+        } else {
+            JOptionPane.showMessageDialog(this, "input int > 0");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        String amountUpdates = txtAmountRoom.getText();
+        int amountUpdate = Integer.parseInt(amountUpdates);
+        txtAmountRoom.setText(String.valueOf(amountUpdate + 1));
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton12ActionPerformed
+
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        String amountUpdates = txtAmountRoom.getText();
+        int amountUpdate = Integer.parseInt(amountUpdates);
+        if (amountUpdate > 0) {
+            txtAmountRoom.setText(String.valueOf(amountUpdate - 1));
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        //Booking
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -945,13 +1255,20 @@ public class BookingJFrame extends javax.swing.JFrame {
     private javax.swing.JFrame BookingRoom;
     private javax.swing.JFrame CartJFrame;
     private javax.swing.JComboBox<String> Combobox;
+    private javax.swing.JFrame DetailBooking;
     private javax.swing.JFrame DetailHotelJFrame;
     private javax.swing.JTable TableViewTypeRoomInHotel;
     private com.toedter.calendar.JDateChooser dataDetailFrom;
     private com.toedter.calendar.JDateChooser dataDetailTo;
+    private javax.swing.JLabel dateDetailBookingFrom;
+    private javax.swing.JLabel dateDetailBookingTo;
     private com.toedter.calendar.JDateChooser dateSearchFrom;
     private com.toedter.calendar.JDateChooser dateSearchTo;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -959,6 +1276,7 @@ public class BookingJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -976,8 +1294,17 @@ public class BookingJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -992,6 +1319,7 @@ public class BookingJFrame extends javax.swing.JFrame {
     private javax.swing.JTable tableViewCart;
     private javax.swing.JTable tableViewHotel;
     private javax.swing.JLabel txtAddressHotel;
+    private javax.swing.JLabel txtAmountRoom;
     private javax.swing.JLabel txtDateFrom;
     private javax.swing.JLabel txtDateTo;
     private javax.swing.JLabel txtDisDiscount;
@@ -1000,6 +1328,8 @@ public class BookingJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel txtIdHotel;
     private javax.swing.JLabel txtIdTypeRoom;
     private javax.swing.JLabel txtNameHotel;
+    private javax.swing.JLabel txtNameHotelDB;
+    private javax.swing.JLabel txtNameRoomDB;
     private javax.swing.JLabel txtNametypeRoom;
     private javax.swing.JLabel txtPrice;
     private javax.swing.JLabel txtRate;
@@ -1007,6 +1337,9 @@ public class BookingJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel txtThanhTien;
     private javax.swing.JLabel txtTotal;
     private javax.swing.JLabel txtTotalInCart;
+    private javax.swing.JLabel txtTotalInDetailBooking;
     private javax.swing.JLabel txtUserName;
+    private javax.swing.JLabel txtnumberOfdateInDetail;
+    private javax.swing.JLabel txtusernameDetailBooking;
     // End of variables declaration//GEN-END:variables
 }

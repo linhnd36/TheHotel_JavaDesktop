@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package linhnd.daos;
+package linhnd.dtos;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -16,13 +16,13 @@ import java.util.Vector;
  */
 public class CartBookingDTO implements Serializable {
 
-    private String idHotel, nameHotel, idKindOfRoom, namekindOfRoom, numberOfDate, numberOfRoom, total;
+    private String idHotel, nameHotel, idKindOfRoom, namekindOfRoom, numberOfDate, numberOfRoom, total,iD;
     private Date dateFrom, dateTo;
 
     public CartBookingDTO() {
     }
 
-    public CartBookingDTO(String idHotel, String nameHotel, String idKindOfRoom, String namekindOfRoom, String numberOfDate, String numberOfRoom, String total, Date dateFrom, Date dateTo) {
+    public CartBookingDTO(String idHotel, String nameHotel, String idKindOfRoom, String namekindOfRoom, String numberOfDate, String numberOfRoom, String total, String iD, Date dateFrom, Date dateTo) {
         this.idHotel = idHotel;
         this.nameHotel = nameHotel;
         this.idKindOfRoom = idKindOfRoom;
@@ -30,11 +30,23 @@ public class CartBookingDTO implements Serializable {
         this.numberOfDate = numberOfDate;
         this.numberOfRoom = numberOfRoom;
         this.total = total;
+        this.iD = iD;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
     }
+
+    public String getiD() {
+        return iD;
+    }
+
+    public void setiD(String iD) {
+        this.iD = iD;
+    }
+
+    
     public Vector toVector(){
         Vector v = new Vector();
+        v.add(iD);
         v.add(nameHotel);
         v.add(namekindOfRoom);
         v.add(new SimpleDateFormat("dd-MM-yyy").format(dateFrom));
