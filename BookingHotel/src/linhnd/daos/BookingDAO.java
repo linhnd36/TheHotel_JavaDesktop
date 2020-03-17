@@ -75,21 +75,63 @@ public class BookingDAO implements Serializable {
         return result;
 
     }
-    
-    public boolean insertBooking(Booking dto) throws Exception{
+
+    public boolean insertBooking(Booking dto) throws Exception {
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
             em.persist(dto);
             em.getTransaction().commit();
-            
-        }catch(Exception ex){
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE,"exception caught",ex);
+
+        } catch (Exception ex) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ex);
             ex.printStackTrace();
-        }finally{
+        } finally {
             em.close();
         }
         return true;
+    }
+
+    public List<Booking> getListBookingbyUsername(String username) throws Exception {
+        EntityManager em = getEntityManager();
+        List<Booking> result = null;
+        try {
+            result = em.createQuery("SELECT b FROM Booking b WHERE b.username.username = ?1 ").setParameter(1, username).getResultList();
+        } finally {
+            em.close();
+        }
+        return result;
+    }
+
+    public boolean updateStatusBooking(String idBooking) throws Exception {
+        EntityManager em = getEntityManager();
+        boolean check = false;
+        try {
+            Booking dto = em.find(Booking.class, idBooking);
+            dto.setStatusBooking("delete");
+            em.getTransaction().begin();
+            em.merge(dto);
+            em.getTransaction().commit();
+            check = true;
+        } finally {
+            em.close();
+        }
+        return check;
+    }
+
+    public List<Booking> getListBookingbySerarch(String username, String search) throws Exception {
+        EntityManager em = getEntityManager();
+        List<Booking> result = null;
+        try {
+            Query query = em.createQuery("SELECT b FROM Booking b,DetailBooking d WHERE b.username.username = ?1 AND b.idBooking = d.booking.idBooking AND d.hotel.nameHotel LIKE ?2 ");
+            query.setParameter(1, username);
+            query.setParameter(2, "%" + search + "%");
+            result = query.getResultList();
+
+        } finally {
+            em.close();
+        }
+        return result;
     }
 
 }

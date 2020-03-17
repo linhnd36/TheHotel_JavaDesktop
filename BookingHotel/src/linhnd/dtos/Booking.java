@@ -6,8 +6,10 @@
 package linhnd.dtos;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Vector;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -73,6 +75,15 @@ public class Booking implements Serializable {
     private Users username;
 
     public Booking() {
+    }
+    public Vector toVector(){
+        Vector v = new Vector();
+        v.add(idBooking);
+        v.add(new SimpleDateFormat("dd-MM-yyyy").format(dateBookingFrom));
+        v.add(new SimpleDateFormat("dd-MM-yyyy").format(dateBookingTo));
+        v.add(totalBooking);
+        v.add(statusBooking);
+        return v;
     }
 
     public Booking(String idBooking) {

@@ -6,6 +6,7 @@
 package linhnd.dtos;
 
 import java.io.Serializable;
+import java.util.Vector;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -64,6 +65,13 @@ public class DetailBooking implements Serializable {
         this.numberOfRoom = numberOfRoom;
         this.priceDetail = priceDetail;
         this.codeRoom = "";
+    }
+    public Vector toVector(){
+        Vector v = new Vector();
+        v.add(hotel.getNameHotel());
+        v.add(detailBookingPK.getIdKindOfRoom());
+        v.add(numberOfRoom);
+        return v;
     }
 
     public DetailBooking(String hotelID, String idBooking, String idKindOfRoom) {

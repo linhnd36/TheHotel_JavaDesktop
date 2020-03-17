@@ -6,13 +6,13 @@
 package linhnd.daos;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import linhnd.dtos.DetailBooking;
-import linhnd.dtos.DetailBookingPK;
 
 /**
  *
@@ -54,5 +54,19 @@ public class DetailBookingDAO implements Serializable {
         }
         return true;
     }
+    public List<DetailBooking> getListDetailBooking(String idBooking) throws Exception {
+        List<DetailBooking> result = null;
+        EntityManager em = getEntityManager();
+        int count = 0;
+        try {
+            Query query = em.createQuery(" SELECT d FROM DetailBooking d WHERE d.booking.idBooking = ?1 ");
+            query.setParameter(1, idBooking);
+            result = query.getResultList();
+        } finally {
+            em.close();
+        }
+        return result;
+    }
+    
 
 }
