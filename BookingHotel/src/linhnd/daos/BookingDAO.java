@@ -15,7 +15,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.TemporalType;
 import linhnd.dtos.Booking;
-import sun.util.logging.resources.logging;
 
 /**
  *

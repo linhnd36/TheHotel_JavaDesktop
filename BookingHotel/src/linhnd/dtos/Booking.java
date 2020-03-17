@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Duc Linh
+ * @author PC
  */
 @Entity
 @Table(name = "Booking")
@@ -79,14 +79,18 @@ public class Booking implements Serializable {
         this.idBooking = idBooking;
     }
 
-    public Booking(String idBooking, Date dateBookingFrom, Date dateBookingTo, String statusBooking, String totalBooking, int numberOfNice) {
+    public Booking(String idBooking, Date dateBookingFrom, Date dateBookingTo, String statusBooking, String desBooking, String totalBooking, int numberOfNice, Users username) {
         this.idBooking = idBooking;
         this.dateBookingFrom = dateBookingFrom;
         this.dateBookingTo = dateBookingTo;
         this.statusBooking = statusBooking;
+        this.desBooking = desBooking;
         this.totalBooking = totalBooking;
         this.numberOfNice = numberOfNice;
+        this.username = username;
     }
+
+    
 
     public String getIdBooking() {
         return idBooking;

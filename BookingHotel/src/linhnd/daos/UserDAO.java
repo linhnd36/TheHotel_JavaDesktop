@@ -19,16 +19,16 @@ import linhnd.dtos.Users;
  *
  * @author Duc Linh
  */
-public class UserDAO implements Serializable{
-    
+public class UserDAO implements Serializable {
+
     EntityManager em = null;
-    
-    private EntityManager getEntityManager(){
+
+    private EntityManager getEntityManager() {
         return Persistence.createEntityManagerFactory("BookingHotelPU").createEntityManager();
     }
-    
-    public String checkLogin(String username, String password) throws Exception{
-        String check = "failed"; 
+
+    public String checkLogin(String username, String password) throws Exception {
+        String check = "failed";
         em = getEntityManager();
         try {
             Users user = em.find(Users.class, username);
@@ -36,12 +36,13 @@ public class UserDAO implements Serializable{
                 check = user.getRoleUser();
                 UserDTO.Username = user.getUsername();
             }
-        }finally{
+        } finally {
             em.close();
         }
         return check;
     }
-    public boolean checkUsername(String username) throws Exception{
+
+    public boolean checkUsername(String username) throws Exception {
         em = getEntityManager();
         boolean check = true;
         try {
@@ -51,23 +52,34 @@ public class UserDAO implements Serializable{
             if (result.isEmpty()) {
                 check = false;
             }
-        }finally{
+        } finally {
             em.close();
         }
         return check;
     }
-    
-    public boolean insertUser(Users dto) throws Exception{
+
+    public Users getUser(String username) throws Exception {
+        Users result = null;
+        em = getEntityManager();
+        try {
+            result = em.find(Users.class, username);
+        } finally {
+            em.close();
+        }
+        return result;
+    }
+
+    public boolean insertUser(Users dto) throws Exception {
         em = getEntityManager();
         try {
             em.getTransaction().begin();
             em.persist(dto);
             em.getTransaction().commit();
-            
-        }catch(Exception e){
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE,"exception caught",e);
+
+        } catch (Exception e) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", e);
             em.getTransaction().rollback();
-        }finally{
+        } finally {
             em.close();
         }
         return true;

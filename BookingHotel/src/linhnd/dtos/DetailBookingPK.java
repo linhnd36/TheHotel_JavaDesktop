@@ -12,7 +12,7 @@ import javax.persistence.Embeddable;
 
 /**
  *
- * @author Duc Linh
+ * @author PC
  */
 @Embeddable
 public class DetailBookingPK implements Serializable {
@@ -23,13 +23,17 @@ public class DetailBookingPK implements Serializable {
     @Basic(optional = false)
     @Column(name = "IdBooking")
     private String idBooking;
+    @Basic(optional = false)
+    @Column(name = "IdKindOfRoom")
+    private String idKindOfRoom;
 
     public DetailBookingPK() {
     }
 
-    public DetailBookingPK(String hotelID, String idBooking) {
+    public DetailBookingPK(String hotelID, String idBooking, String idKindOfRoom) {
         this.hotelID = hotelID;
         this.idBooking = idBooking;
+        this.idKindOfRoom = idKindOfRoom;
     }
 
     public String getHotelID() {
@@ -48,11 +52,20 @@ public class DetailBookingPK implements Serializable {
         this.idBooking = idBooking;
     }
 
+    public String getIdKindOfRoom() {
+        return idKindOfRoom;
+    }
+
+    public void setIdKindOfRoom(String idKindOfRoom) {
+        this.idKindOfRoom = idKindOfRoom;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (hotelID != null ? hotelID.hashCode() : 0);
         hash += (idBooking != null ? idBooking.hashCode() : 0);
+        hash += (idKindOfRoom != null ? idKindOfRoom.hashCode() : 0);
         return hash;
     }
 
@@ -69,12 +82,15 @@ public class DetailBookingPK implements Serializable {
         if ((this.idBooking == null && other.idBooking != null) || (this.idBooking != null && !this.idBooking.equals(other.idBooking))) {
             return false;
         }
+        if ((this.idKindOfRoom == null && other.idKindOfRoom != null) || (this.idKindOfRoom != null && !this.idKindOfRoom.equals(other.idKindOfRoom))) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "linhnd.dtos.DetailBookingPK[ hotelID=" + hotelID + ", idBooking=" + idBooking + " ]";
+        return "linhnd.dtos.DetailBookingPK[ hotelID=" + hotelID + ", idBooking=" + idBooking + ", idKindOfRoom=" + idKindOfRoom + " ]";
     }
     
 }

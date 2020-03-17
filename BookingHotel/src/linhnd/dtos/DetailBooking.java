@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Duc Linh
+ * @author PC
  */
 @Entity
 @Table(name = "DetailBooking")
@@ -27,21 +27,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "DetailBooking.findAll", query = "SELECT d FROM DetailBooking d")
     , @NamedQuery(name = "DetailBooking.findByCodeRoom", query = "SELECT d FROM DetailBooking d WHERE d.codeRoom = :codeRoom")
-    , @NamedQuery(name = "DetailBooking.findByNumberOfNice", query = "SELECT d FROM DetailBooking d WHERE d.numberOfNice = :numberOfNice")
+    , @NamedQuery(name = "DetailBooking.findByNumberOfRoom", query = "SELECT d FROM DetailBooking d WHERE d.numberOfRoom = :numberOfRoom")
     , @NamedQuery(name = "DetailBooking.findByPriceDetail", query = "SELECT d FROM DetailBooking d WHERE d.priceDetail = :priceDetail")
     , @NamedQuery(name = "DetailBooking.findByHotelID", query = "SELECT d FROM DetailBooking d WHERE d.detailBookingPK.hotelID = :hotelID")
-    , @NamedQuery(name = "DetailBooking.findByIdBooking", query = "SELECT d FROM DetailBooking d WHERE d.detailBookingPK.idBooking = :idBooking")})
+    , @NamedQuery(name = "DetailBooking.findByIdBooking", query = "SELECT d FROM DetailBooking d WHERE d.detailBookingPK.idBooking = :idBooking")
+    , @NamedQuery(name = "DetailBooking.findByIdKindOfRoom", query = "SELECT d FROM DetailBooking d WHERE d.detailBookingPK.idKindOfRoom = :idKindOfRoom")})
 public class DetailBooking implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected DetailBookingPK detailBookingPK;
-    @Basic(optional = false)
     @Column(name = "codeRoom")
     private String codeRoom;
     @Basic(optional = false)
-    @Column(name = "numberOfNice")
-    private int numberOfNice;
+    @Column(name = "numberOfRoom")
+    private int numberOfRoom;
     @Basic(optional = false)
     @Column(name = "priceDetail")
     private String priceDetail;
@@ -59,15 +59,14 @@ public class DetailBooking implements Serializable {
         this.detailBookingPK = detailBookingPK;
     }
 
-    public DetailBooking(DetailBookingPK detailBookingPK, String codeRoom, int numberOfNice, String priceDetail) {
+    public DetailBooking(DetailBookingPK detailBookingPK, int numberOfRoom, String priceDetail) {
         this.detailBookingPK = detailBookingPK;
-        this.codeRoom = codeRoom;
-        this.numberOfNice = numberOfNice;
+        this.numberOfRoom = numberOfRoom;
         this.priceDetail = priceDetail;
     }
 
-    public DetailBooking(String hotelID, String idBooking) {
-        this.detailBookingPK = new DetailBookingPK(hotelID, idBooking);
+    public DetailBooking(String hotelID, String idBooking, String idKindOfRoom) {
+        this.detailBookingPK = new DetailBookingPK(hotelID, idBooking, idKindOfRoom);
     }
 
     public DetailBookingPK getDetailBookingPK() {
@@ -86,12 +85,12 @@ public class DetailBooking implements Serializable {
         this.codeRoom = codeRoom;
     }
 
-    public int getNumberOfNice() {
-        return numberOfNice;
+    public int getNumberOfRoom() {
+        return numberOfRoom;
     }
 
-    public void setNumberOfNice(int numberOfNice) {
-        this.numberOfNice = numberOfNice;
+    public void setNumberOfRoom(int numberOfRoom) {
+        this.numberOfRoom = numberOfRoom;
     }
 
     public String getPriceDetail() {

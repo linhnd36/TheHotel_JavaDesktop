@@ -39,13 +39,16 @@ public class SearchController implements Serializable {
             resultMapIdBookIdHotel = hotelDAO.getIdHotelByIdBooking(resultBooking);
             for (Booking booking : resultBooking) {
                 String idHotel = resultMapIdBookIdHotel.get(booking.getIdBooking());
-                int countRoomBook = detailBookingDAO.countRoomInDetailByIdBooking(booking.getIdBooking());
+                //Đếm số lượng phòng ứng với mỗi booking
+                int countRoomBook = detailBookingDAO.countRoomInDetailByIdBooking(booking.getIdBooking());//****
+                // đếm số phòng có trong khách sạn
                 int countRoomInHotel = roomInHotelDAO.countRoomInHotelByHotelid(idHotel);
                 if (countRoomInHotel <= countRoomBook) {
-                    listIdHotelNoVaild.add(idHotel);
+                    //Nếu số lượng phòng trong khách sạn < số lượng phòng booking
+                    listIdHotelNoVaild.add(idHotel); // list những khách sạn không thỏa mãn
                 }
             }
-            listHotelValid = hotelDAO.getlistHotelSearch(listIdHotelNoVaild, textSearch);
+            listHotelValid = hotelDAO.getlistHotelSearch(listIdHotelNoVaild, textSearch); // lấy những khách sạn thảo mãn bằng Not In
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -78,7 +81,7 @@ public class SearchController implements Serializable {
         }
         return listHotelValid;
     }
-    // kiểm tra những loại phòng còn để cho khách book
+    // kiểm tra những loại phòng còn để cho khách book ==> View
     public List<KindOfRoom> checkKindOfRoom(Date dateFrom, Date dateTo, String idHotel) throws Exception {
         List<Booking> resultBooking = null;
         List<KindOfRoom> listKindOfRoomlValid = new ArrayList<>();
@@ -87,16 +90,21 @@ public class SearchController implements Serializable {
             BookingDAO bookingDAO = new BookingDAO();
             RoomInHotelDAO roomInHotelDAO = new RoomInHotelDAO();
             KindOfRoomDAO kindOfRoomDAO = new KindOfRoomDAO();
+            //Lấy List các Booking của idHotel giữa 2 ngày DateFrom và DateTo
             resultBooking = bookingDAO.getListBookingInHotel(dateFrom, dateTo, idHotel);
+            // Lấy list các KindOfRoom của Khách sạn check
             listKindOfRoomlInHotel = kindOfRoomDAO.getListKindOfRoom(idHotel);
             for (KindOfRoom kindOfRoom : listKindOfRoomlInHotel) {
                 int countKindOfRoomBooking = 0;
+                // Đếm số lượng của 1 loại phòng IdKindofRoom
                 int countKindOfRoom = roomInHotelDAO.countOfRoomInHotel(kindOfRoom.getIdKindRoom());
+                // Tính tổng số phòng đã được booking của 1 kindOFRoom
                 for (Booking booking : resultBooking) {
                     countKindOfRoomBooking = countKindOfRoomBooking + roomInHotelDAO.countKindOfRoomBooking(kindOfRoom.getIdKindRoom(), idHotel, booking.getIdBooking());
                 }
                 if (countKindOfRoom > countKindOfRoomBooking) {
-                    listKindOfRoomlValid.add(kindOfRoom);
+                    //Những loại phòng nào có số lượng phòng trong khách sạn > số lượng loại phòng đó trong booking thì add list
+                    listKindOfRoomlValid.add(kindOfRoom); // List loại phòng thỏa mãn
                 }
             }
         } catch (Exception e) {
@@ -104,7 +112,7 @@ public class SearchController implements Serializable {
         }
         return listKindOfRoomlValid;
     }
-    // tính số phòng của 1 loại phòng còn lại thỏa mãn có thể book đc 
+    // tính số phòng của 1 loại phòng còn lại thỏa mãn có thể booking đc 
     public int checkNumberKindOfRoom(Date dateFrom, Date dateTo, String idHotel, String idkindOfRoom) throws Exception {
         List<Booking> resultBooking = null;
         int count = 0;

@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Duc Linh
+ * @author PC
  */
 @Entity
 @Table(name = "Hotel")
@@ -34,11 +34,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Hotel.findByAddressHotel", query = "SELECT h FROM Hotel h WHERE h.addressHotel = :addressHotel")
     , @NamedQuery(name = "Hotel.findByRateHotel", query = "SELECT h FROM Hotel h WHERE h.rateHotel = :rateHotel")
     , @NamedQuery(name = "Hotel.findByStatusHotel", query = "SELECT h FROM Hotel h WHERE h.statusHotel = :statusHotel")
-    , @NamedQuery(name = "Hotel.findByDesHotel", query = "SELECT h FROM Hotel h WHERE h.desHotel = :desHotel")})
+    , @NamedQuery(name = "Hotel.findByDesHotel", query = "SELECT h FROM Hotel h WHERE h.desHotel = :desHotel")
+    , @NamedQuery(name = "Hotel.findByImagerName", query = "SELECT h FROM Hotel h WHERE h.imagerName = :imagerName")})
 public class Hotel implements Serializable {
-
-    @Column(name = "imagerName")
-    private String imagerName;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -59,12 +57,22 @@ public class Hotel implements Serializable {
     private String statusHotel;
     @Column(name = "desHotel")
     private String desHotel;
+    @Column(name = "imagerName")
+    private String imagerName;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "hotel")
     private Collection<DetailBooking> detailBookingCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "hotel")
     private Collection<RoomInHotel> roomInHotelCollection;
 
     public Hotel() {
+    }
+    public Vector toVecterHotel(){
+        Vector v = new Vector();
+        v.add(hotelID);
+        v.add(nameHotel);
+        v.add(addressHotel);
+        v.add(rateHotel);
+        return v;
     }
 
     public Hotel(String hotelID) {
@@ -77,14 +85,6 @@ public class Hotel implements Serializable {
         this.addressHotel = addressHotel;
         this.rateHotel = rateHotel;
         this.statusHotel = statusHotel;
-    }
-    public Vector toVecterHotel(){
-        Vector v = new Vector();
-        v.add(hotelID);
-        v.add(nameHotel);
-        v.add(addressHotel);
-        v.add(rateHotel);
-        return  v;
     }
 
     public String getHotelID() {
@@ -135,6 +135,14 @@ public class Hotel implements Serializable {
         this.desHotel = desHotel;
     }
 
+    public String getImagerName() {
+        return imagerName;
+    }
+
+    public void setImagerName(String imagerName) {
+        this.imagerName = imagerName;
+    }
+
     @XmlTransient
     public Collection<DetailBooking> getDetailBookingCollection() {
         return detailBookingCollection;
@@ -176,14 +184,6 @@ public class Hotel implements Serializable {
     @Override
     public String toString() {
         return "linhnd.dtos.Hotel[ hotelID=" + hotelID + " ]";
-    }
-
-    public String getImagerName() {
-        return imagerName;
-    }
-
-    public void setImagerName(String imagerName) {
-        this.imagerName = imagerName;
     }
     
 }

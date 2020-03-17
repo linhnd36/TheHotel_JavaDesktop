@@ -12,7 +12,7 @@ import javax.persistence.Embeddable;
 
 /**
  *
- * @author Duc Linh
+ * @author PC
  */
 @Embeddable
 public class RoomInHotelPK implements Serializable {

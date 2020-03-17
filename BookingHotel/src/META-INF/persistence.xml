@@ -17,8 +17,12 @@
     <class>linhnd.dtos.KindOfRoom</class>
     <class>linhnd.dtos.Booking</class>
     <class>linhnd.dtos.Discount</class>
-    <class>linhnd.dtos.DetailBooking</class>
     <class>linhnd.dtos.UserHaveDiscount</class>
+    <class>linhnd.dtos.CartBooking</class>
+    <class>linhnd.dtos.Users_1</class>
+    <class>linhnd.dtos.Hotel_1</class>
+    <class>linhnd.dtos.Sysdiagrams</class>
+    <class>linhnd.dtos.DetailBooking</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://localhost:1433;databaseName=HotelManager"/>
       <property name="javax.persistence.jdbc.user" value="sa"/>

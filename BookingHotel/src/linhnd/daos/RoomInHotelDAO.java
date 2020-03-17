@@ -6,7 +6,6 @@
 package linhnd.daos;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
@@ -28,6 +27,7 @@ public class RoomInHotelDAO implements Serializable {
         int count = 0;
         try {
             Query query = em.createQuery("SELECT COUNT(r.roomInHotelPK.codeRoom) FROM RoomInHotel r WHERE r.hotel.hotelID = ?1 ");
+            //Đếm xem có bao nhiêu phòng trong khách sạn bằng iDHotel trong bảng Room in Hotel
             query.setParameter(1, idHotel);
             count = Integer.parseInt(query.getSingleResult().toString());
         } finally {
@@ -48,12 +48,14 @@ public class RoomInHotelDAO implements Serializable {
         }
         return count;
     }
-    
+    // Kiểm tra lại ==============================================================
+    // Đếm số phòng của 1 loại phòng trong 1 khách sạn của 1 booking
     public int countKindOfRoomBooking(String idKindOfRoom, String idHotel, String idBooking) throws Exception {
         int count = 0;
         em = getEntityManager();
         try {
-            Query query = em.createQuery("SELECT COUNT() FROM RoomInHotel r where r.roomInHotelPK.codeRoom IN ( SELECT d FROM DetailBooking d WHERE d.booking.idBooking =?1 ) AND r.hotel.hotelID = ?2 AND r.kindOfRoom.idKindRoom = ?3 ");
+            Query query = em.createQuery(" SELECT SUM(d.numberOfNice) FROM DetailBooking d where d.booking.idBooking = ?1 AND d.hotel.hotelID = ?2 AND d.idKindOfRoom = ?3");
+            // tính tổng các phòng đc book 1 loại phòng 1 khách sạn 1 booking
             query.setParameter(1, idBooking);
             query.setParameter(2, idHotel);
             query.setParameter(1, idKindOfRoom);

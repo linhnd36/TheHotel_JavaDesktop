@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Duc Linh
+ * @author PC
  */
 @Entity
 @Table(name = "KindOfRoom")
@@ -57,7 +57,6 @@ public class KindOfRoom implements Serializable {
 
     public KindOfRoom() {
     }
-    
     public Vector toVectorTypeRoom(){
         Vector v = new Vector();
         v.add(idKindRoom);

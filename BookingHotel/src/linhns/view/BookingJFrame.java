@@ -20,10 +20,13 @@ import linhnd.dtos.CartBookingDTO;
 import linhnd.daos.DiscountDAO;
 import linhnd.daos.HotelDAO;
 import linhnd.daos.KindOfRoomDAO;
+import linhnd.daos.UserDAO;
+import linhnd.dtos.Booking;
 import linhnd.dtos.Discount;
 import linhnd.dtos.Hotel;
 import linhnd.dtos.KindOfRoom;
 import linhnd.dtos.UserDTO;
+import linhnd.dtos.Users;
 
 /**
  *
@@ -110,6 +113,7 @@ public class BookingJFrame extends javax.swing.JFrame {
         dataDetailTo = new com.toedter.calendar.JDateChooser();
         jButton5 = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
+        jButton14 = new javax.swing.JButton();
         BookingRoom = new javax.swing.JFrame();
         jLabel10 = new javax.swing.JLabel();
         txtDateFrom = new javax.swing.JLabel();
@@ -246,6 +250,13 @@ public class BookingJFrame extends javax.swing.JFrame {
 
         jLabel15.setText("TO");
 
+        jButton14.setText("Clear Date");
+        jButton14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton14ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout DetailHotelJFrameLayout = new javax.swing.GroupLayout(DetailHotelJFrame.getContentPane());
         DetailHotelJFrame.getContentPane().setLayout(DetailHotelJFrameLayout);
         DetailHotelJFrameLayout.setHorizontalGroup(
@@ -259,8 +270,10 @@ public class BookingJFrame extends javax.swing.JFrame {
                         .addComponent(jLabel15)
                         .addGap(35, 35, 35)
                         .addComponent(dataDetailTo, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(55, 55, 55)
-                        .addComponent(jButton5))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton5)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton14))
                     .addGroup(DetailHotelJFrameLayout.createSequentialGroup()
                         .addGap(67, 67, 67)
                         .addComponent(labelImager, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -282,7 +295,7 @@ public class BookingJFrame extends javax.swing.JFrame {
                     .addGroup(DetailHotelJFrameLayout.createSequentialGroup()
                         .addGap(37, 37, 37)
                         .addComponent(jLabel5)))
-                .addContainerGap(125, Short.MAX_VALUE))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
         DetailHotelJFrameLayout.setVerticalGroup(
             DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -316,7 +329,9 @@ public class BookingJFrame extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(dataDetailFrom, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(dataDetailTo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton5))
+                        .addGroup(DetailHotelJFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton5)
+                            .addComponent(jButton14)))
                     .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1014,6 +1029,8 @@ public class BookingJFrame extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         Date dateDetailFrom = dataDetailFrom.getDate();
         Date dateDetailTo = dataDetailTo.getDate();
+        dataDetailFrom.getDateEditor().setEnabled(false);
+        dataDetailTo.getDateEditor().setEnabled(false);
         String idHotel = txtIdHotel.getText();
         Date dateNow = new Date();
         if (dateDetailFrom != null && dateDetailTo != null) {
@@ -1056,15 +1073,16 @@ public class BookingJFrame extends javax.swing.JFrame {
         String numberOfRoom = Combobox.getSelectedItem().toString();
         String numberOfDate = numberOfdate.getText();
         Date dateFrom = dataDetailFrom.getDate();
+        Date dateTo = dataDetailTo.getDate();
         String total = txtTotal.getText();
         String nameHotel = txtNameHotel.getText();
         String namekindOfRoom = txtNametypeRoom.getText();
-        int check = 0;
         if (!numberOfRoom.equals("0")) {
-            CartBookingDTO dto = new CartBookingDTO(idHotel, nameHotel, idKindOfRoom, namekindOfRoom, numberOfDate, numberOfRoom, total, idHotel + idKindOfRoom, dateFrom, dateFrom);
+            CartBookingDTO dto = new CartBookingDTO(idHotel + idKindOfRoom, idHotel, nameHotel, idKindOfRoom, namekindOfRoom, numberOfDate, numberOfRoom, total, dateFrom, dateTo);
             listCart.add(dto);
             JOptionPane.showMessageDialog(this, "Booking sucessfull !");
             BookingRoom.setVisible(false);
+            DetailHotelJFrame.setVisible(false);
         } else {
             JOptionPane.showMessageDialog(this, "Select Amount Room !");
         }
@@ -1214,39 +1232,59 @@ public class BookingJFrame extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         //Booking
-        String errors = "";
-        SearchController search = new SearchController();
-        int amountBook = 0;
-        int amountkindOfRoomVaild = 0;
-        for (CartBookingDTO cartBookingDTO : listCart) {
-            amountBook = Integer.parseInt(cartBookingDTO.getNumberOfRoom());
-            try {
-                amountkindOfRoomVaild = search.checkNumberKindOfRoom(cartBookingDTO.getDateFrom(), cartBookingDTO.getDateTo(), cartBookingDTO.getIdHotel(), cartBookingDTO.getIdKindOfRoom());
+        if (!listCart.isEmpty()) {
+            String errors = "";
+            SearchController search = new SearchController();
+            int amountBook = 0;
+            int amountkindOfRoomVaild = 0;
+            for (CartBookingDTO cartBookingDTO : listCart) {
+                amountBook = Integer.parseInt(cartBookingDTO.getNumberOfRoom());
+                try {
+                    amountkindOfRoomVaild = search.checkNumberKindOfRoom(cartBookingDTO.getDateFrom(), cartBookingDTO.getDateTo(), cartBookingDTO.getIdHotel(), cartBookingDTO.getIdKindOfRoom());
 
-            } catch (Exception e) {
-                e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if (amountBook > amountkindOfRoomVaild) {
+                    errors = errors + cartBookingDTO.getIdKindOfRoom() + " in " + cartBookingDTO.getNameHotel() + " have only " + amountkindOfRoomVaild;
+                }
             }
-            if (amountBook > amountkindOfRoomVaild) {
-                errors = errors + cartBookingDTO.getIdKindOfRoom() + " in " + cartBookingDTO.getNameHotel() + " have only " + amountkindOfRoomVaild;
-            }
-        }
-        if (errors.equals("")) {
-            //insert table Booking
-                //chia nhỏ Booking theo dạng nếu khác ngày check in thì tách booking nếu khác khách sạn tác luôn
-            float countTotal = 0;
-            for (int i = 0; i < listCart.size(); i++) {
-                System.out.println(listCart.get(i).getDateFrom().compareTo(listCart.get(i+1).getDateFrom()));
-                System.out.println(listCart.get(i).getDateTo().compareTo(listCart.get(i+1).getDateTo()));
-            }
-            
+            if (errors.equals("")) {
+                UserDAO daoUser = new UserDAO();
+                Users username = null;
+                try {
+                    username = daoUser.getUser(UserDTO.Username);
+                } catch (Exception ex) {
+                    Logger.getLogger(BookingJFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                CartBookingDTO dtoCartBooking = listCart.get(0);
+                Date dateFrom = listCart.get(0).getDateFrom();
+                Date dateTo = listCart.get(0).getDateTo();
+                float countTotal = 0;
+                for (CartBookingDTO cartBookingDTO : listCart) {
+                    countTotal = countTotal + Float.parseFloat(cartBookingDTO.getTotal());
+                }
+                Booking dto = new Booking(dtoCartBooking.getiD(), dateFrom, dateTo, "checking", " ", String.valueOf(countTotal), Integer.parseInt(dtoCartBooking.getNumberOfDate()), username);
+                //Insert xong Booking
+                // insert detailBooking
+                //chỉnh codeRoom thành idKindOfRoom codeRoom để null để khi nào update trạng thái của Booking thành checkIn thi filt vào
 
-            // insert table detail Booking 
-            //change status table UserhaveDiscount
-        } else {
-            JOptionPane.showMessageDialog(this, errors);
+            } else {
+                JOptionPane.showMessageDialog(this, errors);
+            }
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+        int check = JOptionPane.showConfirmDialog(this, "If you want change date Cart will clear, Ok ?");
+        if (check == JOptionPane.YES_OPTION) {
+            dataDetailFrom.getDateEditor().setEnabled(true);
+            dataDetailTo.getDateEditor().setEnabled(true);
+            listCart.clear();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton14ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1302,6 +1340,7 @@ public class BookingJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
+    private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;

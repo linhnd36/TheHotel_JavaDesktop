@@ -6,17 +6,9 @@
 package linhnd.daos;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import linhnd.dtos.Booking;
-import linhnd.dtos.DetailBooking;
-import linhnd.dtos.Hotel;
 
 /**
  *
@@ -32,7 +24,8 @@ public class DetailBookingDAO implements Serializable {
         EntityManager em = getEntityManager();
         int count = 0;
         try {
-            Query query = em.createQuery("SELECT COUNT(d.codeRoom) FROM DetailBooking d WHERE d.booking.idBooking = ?1 ");
+            Query query = em.createQuery(" SELECT SUM(d.numberOfRoom) FROM DetailBooking d WHERE d.booking.idBooking = ?1 ");
+            // Đếm số lượng phòng được booking bằng idBooking
             query.setParameter(1, idBooking);
             count = Integer.parseInt(query.getSingleResult().toString());
         }finally{
