@@ -16,12 +16,16 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import linhnd.controllers.SearchController;
+import linhnd.daos.BookingDAO;
+import linhnd.daos.DetailBookingDAO;
 import linhnd.dtos.CartBookingDTO;
 import linhnd.daos.DiscountDAO;
 import linhnd.daos.HotelDAO;
 import linhnd.daos.KindOfRoomDAO;
 import linhnd.daos.UserDAO;
 import linhnd.dtos.Booking;
+import linhnd.dtos.DetailBooking;
+import linhnd.dtos.DetailBookingPK;
 import linhnd.dtos.Discount;
 import linhnd.dtos.Hotel;
 import linhnd.dtos.KindOfRoom;
@@ -52,6 +56,7 @@ public class BookingJFrame extends javax.swing.JFrame {
         tableModelHotel = (DefaultTableModel) tableViewHotel.getModel();
         tableModelRoomInHotel = (DefaultTableModel) TableViewTypeRoomInHotel.getModel();
         tableModelCart = (DefaultTableModel) tableViewCart.getModel();
+        txtUsernameWelcome.setText(UserDTO.Username);
         firstController();
 
     }
@@ -184,8 +189,10 @@ public class BookingJFrame extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
-        jLabel11 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        jLabel35 = new javax.swing.JLabel();
+        txtUsernameWelcome = new javax.swing.JLabel();
+        jButton15 = new javax.swing.JButton();
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel5.setText("Detail Hotel");
@@ -856,9 +863,6 @@ public class BookingJFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel11.setForeground(new java.awt.Color(255, 51, 51));
-        jLabel11.setText("* You need login to Booking Hotel");
-
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/linhnd/icon/icons8_shopping_cart_30px.png"))); // NOI18N
         jButton2.setText("CART");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -867,21 +871,20 @@ public class BookingJFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel35.setText("Welcome :");
+
+        txtUsernameWelcome.setText("000");
+
+        jButton15.setText("View History");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(227, 227, 227)
-                        .addComponent(jButton2)
-                        .addGap(20, 20, 20))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 625, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(104, 104, 104))))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 625, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(104, 104, 104))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -903,11 +906,23 @@ public class BookingJFrame extends javax.swing.JFrame {
                                 .addComponent(jButton3))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(130, 130, 130)
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(86, 86, 86)
-                        .addComponent(jLabel11)))
+                        .addComponent(jLabel2)))
                 .addContainerGap(57, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel35)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtUsernameWelcome)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(227, 227, 227)
+                        .addComponent(jButton2)
+                        .addGap(20, 20, 20))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -915,7 +930,9 @@ public class BookingJFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jButton2))
+                    .addComponent(jButton2)
+                    .addComponent(jLabel35)
+                    .addComponent(txtUsernameWelcome))
                 .addGap(43, 43, 43)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -931,9 +948,9 @@ public class BookingJFrame extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(43, 43, 43)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jLabel11)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton15, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                .addGap(26, 26, 26))
         );
 
         pack();
@@ -972,6 +989,7 @@ public class BookingJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void tableViewHotelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableViewHotelMouseClicked
+        checkSearch = false;
         String imagerUrl = "/imager/";
         int row = tableViewHotel.getSelectedRow();
         String idHotel = (String) tableModelHotel.getValueAt(row, 0);
@@ -1078,11 +1096,25 @@ public class BookingJFrame extends javax.swing.JFrame {
         String nameHotel = txtNameHotel.getText();
         String namekindOfRoom = txtNametypeRoom.getText();
         if (!numberOfRoom.equals("0")) {
-            CartBookingDTO dto = new CartBookingDTO(idHotel + idKindOfRoom, idHotel, nameHotel, idKindOfRoom, namekindOfRoom, numberOfDate, numberOfRoom, total, dateFrom, dateTo);
-            listCart.add(dto);
-            JOptionPane.showMessageDialog(this, "Booking sucessfull !");
-            BookingRoom.setVisible(false);
-            DetailHotelJFrame.setVisible(false);
+            if (!listCart.isEmpty()) {
+                Date dateFromCart = listCart.get(0).getDateFrom();
+                Date dateToCart = listCart.get(0).getDateTo();
+                if (dateFrom.compareTo(dateFromCart) == 0 && dateTo.compareTo(dateToCart) == 0) {
+                    CartBookingDTO dto = new CartBookingDTO(idHotel + idKindOfRoom, idHotel, nameHotel, idKindOfRoom, namekindOfRoom, numberOfDate, numberOfRoom, total, dateFrom, dateTo);
+                    listCart.add(dto);
+                    JOptionPane.showMessageDialog(this, "Booking sucessfull !");
+                    BookingRoom.setVisible(false);
+                    DetailHotelJFrame.setVisible(false);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Ples chose one Date From ----> Date To one Booking");
+                }
+            } else {
+                CartBookingDTO dto = new CartBookingDTO(idHotel + idKindOfRoom, idHotel, nameHotel, idKindOfRoom, namekindOfRoom, numberOfDate, numberOfRoom, total, dateFrom, dateTo);
+                listCart.add(dto);
+                JOptionPane.showMessageDialog(this, "Booking sucessfull !");
+                BookingRoom.setVisible(false);
+                DetailHotelJFrame.setVisible(false);
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Select Amount Room !");
         }
@@ -1246,8 +1278,9 @@ public class BookingJFrame extends javax.swing.JFrame {
                     e.printStackTrace();
                 }
                 if (amountBook > amountkindOfRoomVaild) {
-                    errors = errors + cartBookingDTO.getIdKindOfRoom() + " in " + cartBookingDTO.getNameHotel() + " have only " + amountkindOfRoomVaild;
+                    errors = errors + cartBookingDTO.getIdKindOfRoom() + " in " + cartBookingDTO.getNameHotel() + " have only " + amountkindOfRoomVaild+"  ";
                 }
+                
             }
             if (errors.equals("")) {
                 UserDAO daoUser = new UserDAO();
@@ -1264,11 +1297,43 @@ public class BookingJFrame extends javax.swing.JFrame {
                 for (CartBookingDTO cartBookingDTO : listCart) {
                     countTotal = countTotal + Float.parseFloat(cartBookingDTO.getTotal());
                 }
-                Booking dto = new Booking(dtoCartBooking.getiD(), dateFrom, dateTo, "checking", " ", String.valueOf(countTotal), Integer.parseInt(dtoCartBooking.getNumberOfDate()), username);
+                String dateNow = new SimpleDateFormat("dd,MM,yyyy,hh:mm:ss").format(new Date());
+                Booking dto = new Booking(dtoCartBooking.getiD() + dateNow, dateFrom, dateTo, "checking", " ", String.valueOf(countTotal), Integer.parseInt(dtoCartBooking.getNumberOfDate()), username);
+                try {
+                    BookingDAO daoBooking = new BookingDAO();
+                    daoBooking.insertBooking(dto);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 //Insert xong Booking
-                // insert detailBooking
-                //chỉnh codeRoom thành idKindOfRoom codeRoom để null để khi nào update trạng thái của Booking thành checkIn thi filt vào
+                for (CartBookingDTO cartBookingDTO : listCart) {
+                    DetailBookingPK dtoPK = new DetailBookingPK(cartBookingDTO.getIdHotel(), dtoCartBooking.getiD() + dateNow, cartBookingDTO.getIdKindOfRoom());
+                    DetailBooking dtoDB = new DetailBooking(dtoPK, Integer.parseInt(cartBookingDTO.getNumberOfRoom()), cartBookingDTO.getTotal());
+                    try {
+                        DetailBookingDAO dao = new DetailBookingDAO();
+                        dao.insertDetailBooking(dtoDB);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (!txtDisDiscount.getText().equals("")) {
+                    String codeDiscount = txtDiscountCode.getText();
+                    try {
+                        DiscountDAO daoDiscount = new DiscountDAO();
+                        daoDiscount.updateStatusDiscount(UserDTO.Username, codeDiscount);
+                    } catch (Exception e) {
+                    e.printStackTrace();
+                    }
+                }
+                listCart.clear();
+                CartJFrame.setVisible(false);
+                dataDetailFrom.getDateEditor().setEnabled(false);
+                dataDetailTo.getDateEditor().setEnabled(false);
+                dataDetailTo.cleanup();
 
+                //xử lý discount
+                JOptionPane.showMessageDialog(this, "Done");
+                // insert detailBooking
             } else {
                 JOptionPane.showMessageDialog(this, errors);
             }
@@ -1277,11 +1342,18 @@ public class BookingJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-        int check = JOptionPane.showConfirmDialog(this, "If you want change date Cart will clear, Ok ?");
-        if (check == JOptionPane.YES_OPTION) {
+        if (!listCart.isEmpty()) {
+            int check = JOptionPane.showConfirmDialog(this, "If you want change date Cart will clear, Ok ?");
+            if (check == JOptionPane.YES_OPTION) {
+                dataDetailFrom.getDateEditor().setEnabled(true);
+                dataDetailFrom.getCalendarButton().setEnabled(false);
+
+                dataDetailTo.getDateEditor().setEnabled(true);
+                listCart.clear();
+            }
+        } else {
             dataDetailFrom.getDateEditor().setEnabled(true);
             dataDetailTo.getDateEditor().setEnabled(true);
-            listCart.clear();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton14ActionPerformed
@@ -1341,6 +1413,7 @@ public class BookingJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
+    private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1351,7 +1424,6 @@ public class BookingJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -1377,6 +1449,7 @@ public class BookingJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1411,6 +1484,7 @@ public class BookingJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel txtTotalInCart;
     private javax.swing.JLabel txtTotalInDetailBooking;
     private javax.swing.JLabel txtUserName;
+    private javax.swing.JLabel txtUsernameWelcome;
     private javax.swing.JLabel txtnumberOfdateInDetail;
     private javax.swing.JLabel txtusernameDetailBooking;
     // End of variables declaration//GEN-END:variables

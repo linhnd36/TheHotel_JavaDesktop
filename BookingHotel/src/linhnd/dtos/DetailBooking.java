@@ -63,6 +63,7 @@ public class DetailBooking implements Serializable {
         this.detailBookingPK = detailBookingPK;
         this.numberOfRoom = numberOfRoom;
         this.priceDetail = priceDetail;
+        this.codeRoom = "";
     }
 
     public DetailBooking(String hotelID, String idBooking, String idKindOfRoom) {
@@ -141,5 +142,5 @@ public class DetailBooking implements Serializable {
     public String toString() {
         return "linhnd.dtos.DetailBooking[ detailBookingPK=" + detailBookingPK + " ]";
     }
-    
+
 }
