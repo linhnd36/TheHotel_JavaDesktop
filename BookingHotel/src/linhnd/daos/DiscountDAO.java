@@ -6,9 +6,11 @@
 package linhnd.daos;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 import linhnd.dtos.Discount;
 import linhnd.dtos.UserHaveDiscount;
 
@@ -28,12 +30,14 @@ public class DiscountDAO implements Serializable {
     }
 
     public Discount getDiscount(String disCode, String username) throws Exception {
+        Date dateNow = new Date();
         Discount dto = null;
         em = getEntityManager();
         try {
-            Query query = em.createQuery("SELECT d FROM Discount d, UserHaveDiscount u WHERE d.codeDiscount = ?1 AND d.statusDiscount = 'active' AND u.users.username = ?2 AND u.discount.codeDiscount = d.codeDiscount AND u.statusUserDis = 'ready' ");
+            Query query = em.createQuery("SELECT d FROM Discount d, UserHaveDiscount u WHERE d.codeDiscount = ?1 AND d.statusDiscount = 'active' AND u.users.username = ?2 AND u.discount.codeDiscount = d.codeDiscount AND u.statusUserDis = 'ready' AND d.dateDisTo > ?3 ");
             query.setParameter(1, disCode);
             query.setParameter(2, username);
+            query.setParameter(3, dateNow, TemporalType.DATE);
             dto = (Discount) query.getSingleResult();
         } finally {
             em.close();

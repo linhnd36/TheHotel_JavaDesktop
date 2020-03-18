@@ -103,6 +103,7 @@ public class BookingDAO implements Serializable {
         return result;
     }
 
+
     public boolean updateStatusBooking(String idBooking) throws Exception {
         EntityManager em = getEntityManager();
         boolean check = false;
@@ -126,6 +127,40 @@ public class BookingDAO implements Serializable {
             Query query = em.createQuery("SELECT b FROM Booking b,DetailBooking d WHERE b.username.username = ?1 AND b.idBooking = d.booking.idBooking AND d.hotel.nameHotel LIKE ?2 ");
             query.setParameter(1, username);
             query.setParameter(2, "%" + search + "%");
+            result = query.getResultList();
+
+        } finally {
+            em.close();
+        }
+        return result;
+    }
+
+
+    public List<Booking> getListBookingbySerarch(String username, String search, Date dateFrom, Date dateTo) throws Exception {
+        EntityManager em = getEntityManager();
+        List<Booking> result = null;
+        try {
+            Query query = em.createQuery("SELECT b FROM Booking b,DetailBooking d WHERE b.username.username = ?1 AND b.idBooking = d.booking.idBooking AND d.hotel.nameHotel LIKE ?2 AND b.dateBookingFrom > ?3 AND b.dateBookingTo < ?4");
+            query.setParameter(1, username);
+            query.setParameter(2, "%" + search + "%");
+            query.setParameter(3, dateFrom);
+            query.setParameter(4, dateTo);
+            result = query.getResultList();
+
+        } finally {
+            em.close();
+        }
+        return result;
+    }
+
+    public List<Booking> getListBookingbySerarch(String username, Date dateFrom, Date dateTo) throws Exception {
+        EntityManager em = getEntityManager();
+        List<Booking> result = null;
+        try {
+            Query query = em.createQuery("SELECT b FROM Booking b,DetailBooking d WHERE b.username.username = ?1 AND b.idBooking = d.booking.idBooking AND b.dateBookingFrom > ?3 AND b.dateBookingTo < ?4");
+            query.setParameter(1, query);
+            query.setParameter(3, dateFrom);
+            query.setParameter(4, dateTo);
             result = query.getResultList();
 
         } finally {

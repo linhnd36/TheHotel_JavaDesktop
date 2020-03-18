@@ -134,9 +134,9 @@ public class LoginJFrame extends javax.swing.JFrame {
                     cr.setVisible(true);
                     this.dispose();
                 } else if (dao.checkLogin(username, password).equals("admin")) {
-                    AdminJFrame ad = new AdminJFrame();
-                    ad.setVisible(true);
-                    this.dispose();
+//                    AdminJFrame ad = new AdminJFrame();
+//                    ad.setVisible(true);
+//                    this.dispose();
                 } else if (dao.checkLogin(username, password).equals("user")) {
                     BookingJFrame bk = new BookingJFrame();
                     bk.setVisible(true);

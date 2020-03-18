@@ -7,6 +7,7 @@ package linhns.view;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -25,7 +26,6 @@ public class ViewHistoryUser extends javax.swing.JFrame {
     DefaultTableModel tableModelBooking = null;
     DefaultTableModel tableModelDetailBooking = null;
     Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        
 
     /**
      * Creates new form ViewHistoryUser
@@ -52,6 +52,7 @@ public class ViewHistoryUser extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tableViewDetailBooking = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableViewBooking = new javax.swing.JTable();
@@ -60,6 +61,10 @@ public class ViewHistoryUser extends javax.swing.JFrame {
         txtSearch = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        dateSearchFrom = new com.toedter.calendar.JDateChooser();
+        dateSearchTo = new com.toedter.calendar.JDateChooser();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         tableViewDetailBooking.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -105,6 +110,8 @@ public class ViewHistoryUser extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(53, Short.MAX_VALUE))
         );
+
+        jButton4.setText("jButton4");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -157,33 +164,50 @@ public class ViewHistoryUser extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setText("To");
+
+        jLabel4.setText("Date");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtUsername)
-                .addGap(56, 56, 56)
-                .addComponent(jButton3)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(39, Short.MAX_VALUE)
+                .addGap(34, 34, 34)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 694, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(315, 315, 315)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtUsername)
+                        .addGap(56, 56, 56)
+                        .addComponent(jButton3))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(151, 151, 151)
-                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(315, 315, 315)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(140, 140, 140)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jButton2))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(37, 37, 37)
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(dateSearchFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel3)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(dateSearchTo, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 202, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,14 +218,22 @@ public class ViewHistoryUser extends javax.swing.JFrame {
                     .addComponent(txtUsername)
                     .addComponent(jButton3))
                 .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(dateSearchFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)))
+                    .addComponent(dateSearchTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addGap(24, 24, 24))
         );
 
         pack();
@@ -224,12 +256,12 @@ public class ViewHistoryUser extends javax.swing.JFrame {
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_tableViewBookingMouseClicked
-    
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int row = tableViewBooking.getSelectedRow();
         if (row >= 0) {
             String idBooking = (String) tableModelBooking.getValueAt(row, 0);
-            int confim = JOptionPane.showConfirmDialog(this, "Do you want delete Booking "+idBooking);
+            int confim = JOptionPane.showConfirmDialog(this, "Do you want delete Booking " + idBooking);
             if (confim == JOptionPane.YES_OPTION) {
                 try {
                     BookingDAO dao = new BookingDAO();
@@ -240,7 +272,7 @@ public class ViewHistoryUser extends javax.swing.JFrame {
                     e.printStackTrace();
                 }
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Select Row");
         }
         // TODO add your handling code here:
@@ -248,10 +280,30 @@ public class ViewHistoryUser extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String search = txtSearch.getText();
+        Date dateFrom = dateSearchFrom.getDate();
+        Date dateTo = dateSearchTo.getDate();
         if (!search.equals("")) {
+            if (dateFrom == null && dateTo == null) {
+                try {
+                    BookingDAO dao = new BookingDAO();
+                    List<Booking> result = dao.getListBookingbySerarch(UserDTO.Username, search);
+                    viewtableBooking(result);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    BookingDAO dao = new BookingDAO();
+                    List<Booking> result = dao.getListBookingbySerarch(UserDTO.Username, search, dateFrom, dateTo);
+                    viewtableBooking(result);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
             try {
                 BookingDAO dao = new BookingDAO();
-                List<Booking> result = dao.getListBookingbySerarch(UserDTO.Username, search);
+                List<Booking> result = dao.getListBookingbySerarch(UserDTO.Username, dateFrom, dateTo);
                 viewtableBooking(result);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -327,11 +379,16 @@ public class ViewHistoryUser extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFrame DetailBooking;
+    private com.toedter.calendar.JDateChooser dateSearchFrom;
+    private com.toedter.calendar.JDateChooser dateSearchTo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tableViewBooking;
